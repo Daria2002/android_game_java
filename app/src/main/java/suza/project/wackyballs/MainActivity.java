@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnPlay = (Button) findViewById(R.id.btnPlay);
         Button btnExit = (Button) findViewById(R.id.btnExit);
 
+        //TODO Use Butterknife for adding callbacks
         btnPlay.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
