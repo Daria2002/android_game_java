@@ -43,20 +43,9 @@ public class MySpeed {
      * @param yv Y Component speed value.
      */
     public MySpeed(double xv, double yv) {
-        Log.d(TAG, String.format("New speed value: vx = %2f, vy = %2f",
-                xv, yv));
-
         this.xv = xv;
-        if (this.xv < 0) {
-            this.xv = -this.xv;
-            this.xDirection = DIRECTION_LEFT;
-        }
-
         this.yv = yv;
-        if (this.yv < 0) {
-            this.yv = -this.yv;
-            this.yDirection = DIRECTION_UP;
-        }
+        adjustSpeedDirection();
     }
 
     /**
@@ -114,5 +103,35 @@ public class MySpeed {
     public static double getPhase(double dx, double dy, double dt) {
         double phase = Math.atan2(dy/dt, dx/dt);
         return phase > 0 ? phase : phase + 2* Math.PI;
+    }
+
+    public void increaseSpeed(double xv, double yv) {
+        this.xv = this.xv * xDirection + xv;
+        this.yv = this.yv * yDirection + yv;
+
+        adjustSpeedDirection();
+    }
+
+    public void reduceSpeed(double xv, double yv) {
+        this.xv = this.xv * xDirection - xv;
+        this.yv = this.yv * yDirection - yv;
+
+        adjustSpeedDirection();
+    }
+
+    private void adjustSpeedDirection() {
+        if (this.xv < 0) {
+            xDirection = DIRECTION_LEFT;
+            this.xv = - this.xv;
+        } else {
+            xDirection = DIRECTION_RIGHT;
+        }
+
+        if (this.yv < 0) {
+            yDirection = DIRECTION_UP;
+            this.yv = -this.yv;
+        } else {
+            yDirection = DIRECTION_DOWN;
+        }
     }
 }

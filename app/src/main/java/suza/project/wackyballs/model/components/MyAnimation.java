@@ -1,10 +1,9 @@
-package suza.project.wackyballs.model;
+package suza.project.wackyballs.model.components;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
-
-import suza.project.wackyballs.model.components.MyFigure;
 
 /**
  * This class extends MyFigure and adds animation functionality to it.
@@ -12,7 +11,7 @@ import suza.project.wackyballs.model.components.MyFigure;
  * Created by lmark on 06/08/2017.
  */
 
-public class MyAnimation extends MyFigure {
+public abstract class MyAnimation extends MyFigure {
     private static final String TAG = MyAnimation.class.getSimpleName();
 
     /**
@@ -88,5 +87,21 @@ public class MyAnimation extends MyFigure {
                 getX() - spriteWidth/2, getY() - spriteHeight/2,
                 getX() + spriteWidth/2, getY() + spriteHeight/2);
         canvas.drawBitmap(super.getBitmap(), sourceRect, destRect, null);
+    }
+
+    /**
+     * @return Returns bitmap width
+     */
+    @Override
+    public int getWidth() {
+        return spriteWidth;
+    }
+
+    /**
+     * @return Returns bitmab height
+     */
+    @Override
+    public int getHeight() {
+        return spriteHeight;
     }
 }

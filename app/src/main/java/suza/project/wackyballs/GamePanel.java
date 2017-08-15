@@ -1,8 +1,6 @@
 package suza.project.wackyballs;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import suza.project.wackyballs.model.MyAnimation;
+import suza.project.wackyballs.model.FigureContainer;
 import suza.project.wackyballs.model.MyExplosion;
 import suza.project.wackyballs.model.components.MySpeed;
 
@@ -28,7 +26,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * Class tag used for logging.
      */
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = GamePanel.class.getSimpleName();
 
     /**
      * Game loop thread.
@@ -39,16 +37,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      * Currently set average FPS.
      */
     private String avgFps;
-    private MyAnimation myFigure;
+
+    /**
+     * Figure container - holds all figureContainer on screen.
+     */
+    private FigureContainer figureContainer;
     private MyExplosion[] explosions = new MyExplosion[10];
     private static final int EXPLOSION_COUNT = 50;
-
-    private float xOld = 0;
-    private float dx = 0;
-    private float yOld = 0;
-    private float dy = 0;
-    private long dt = 0;
-    private long tOld;
 
     /**
      * Game panel constructor. It starts the main game thread,
@@ -67,12 +62,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         // initialize the game loop thread
         gameLoopThread = new MainThread(getHolder(), this);
-
-        myFigure = new MyAnimation(
-                BitmapFactory.decodeResource(getResources(),R.drawable.face_animation),
-                30, 30,
-                10, 4);
-        myFigure.setMySpeed(new MySpeed(5,5));
     }
 
     /**
@@ -82,6 +71,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+        // Initialize figure container..
+        if (figureContainer == null) {
+            figureContainer = new FigureContainer(this, 10);
+        }
 
         // Solution for freezing when app is paused (?)
         if (!gameLoopThread.isAlive()) {
@@ -133,46 +127,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // delegating event handling to the droid
-            myFigure.handleActionDown((int)event.getX(), (int)event.getY());
-
-            // check if in the lower part of the screen we exit
-            if (event.getY() > getHeight() - 50) {
-                gameLoopThread.setRunning(false);
-                ((Activity)getContext()).finish();
-            } else {
-                Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
-            }
-
-            if (myFigure.isTouched()) {
-                xOld = event.getX();
-                yOld = event.getY();
-                tOld = System.currentTimeMillis();
-            }
+            figureContainer.handleActionDown((int)event.getX(), (int)event.getY());
+            Log.d(TAG, "Coordinates: x=" + event.getX() + ",y=" + event.getY());
 
         } if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            // the gestures
-            if (myFigure.isTouched()) {
-                // the droid was picked up and is being dragged
-                myFigure.setX((int)event.getX());
-                myFigure.setY((int)event.getY());
-
-                dx = event.getX() - xOld;
-                dy = event.getY() - yOld;
-                dt = System.currentTimeMillis() - tOld;
-                tOld = System.currentTimeMillis();
-                xOld = event.getX();
-                yOld = event.getY();
-            }
+            figureContainer.handleActionMove((int)event.getX(), (int)event.getY());
 
         } if (event.getAction() == MotionEvent.ACTION_UP) {
             // touch was released
-            if (myFigure.isTouched()) {
-                myFigure.setTouched(false);
-                Log.d(TAG, String.format("xOld = %.2f, yOld = %.2f, %d", dx, dy, dt));
-                myFigure.setMySpeed(new MySpeed(dx, dy, (double)dt/50));
-                generateExplosion(event.getX(), event.getY());
-            }
+            figureContainer.handleActionUp((int)event.getX(), (int)event.getY());
         }
         return true;
     }
@@ -205,7 +168,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawColor(Color.BLACK);
         this.draw(canvas);
         displayFps(canvas, avgFps);
-        myFigure.draw(canvas);
+        figureContainer.draw(canvas);
+
         for (MyExplosion explosion:explosions) {
             if (explosion != null) {
                 explosion.draw(canvas);
@@ -234,32 +198,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void update() {
 
-        // check collision with right wall if heading right
-        if (myFigure.getMySpeed().getxDirection() == MySpeed.DIRECTION_RIGHT
-                && myFigure.getX() + myFigure.getBitmap().getHeight() / 2 >= getWidth()) {
-            myFigure.getMySpeed().toggleXDirection();
-            myFigure.reduceSpeed(1.5);
-        }
-        // check collision with left wall if heading left
-        if (myFigure.getMySpeed().getxDirection() == MySpeed.DIRECTION_LEFT
-                && myFigure.getX() - myFigure.getBitmap().getHeight() / 2 <= 0) {
-            myFigure.getMySpeed().toggleXDirection();
-            myFigure.reduceSpeed(1.5);
-        }
-        // check collision with bottom wall if heading down
-        if (myFigure.getMySpeed().getyDirection() == MySpeed.DIRECTION_DOWN
-                && myFigure.getY() + myFigure.getBitmap().getHeight() / 2 >= getHeight()) {
-            myFigure.getMySpeed().toggleYDirection();
-            myFigure.reduceSpeed(1.5);
-        }
-        // check collision with top wall if heading up
-        if (myFigure.getMySpeed().getyDirection() == MySpeed.DIRECTION_UP
-                && myFigure.getY() - myFigure.getBitmap().getHeight() / 2 <= 0) {
-            myFigure.getMySpeed().toggleYDirection();
-            myFigure.reduceSpeed(1.5);
-        }
-        // Update the lone droid
-        myFigure.update();
+        figureContainer.update();
+
         for (MyExplosion explosion:explosions) {
             if (explosion != null) {
                 explosion.update();

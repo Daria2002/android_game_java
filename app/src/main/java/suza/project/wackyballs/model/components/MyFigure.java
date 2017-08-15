@@ -2,16 +2,19 @@ package suza.project.wackyballs.model.components;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
+
+import java.util.List;
 
 /**
  * This class represents a non-animated figure with some basic properties(speed, position,
- * image - represented as a Bitmap object, etc.)
+ * image - represented as a Bitmap object, etc.) It can collide with walls.
  *
  * Created by lmark on 03/08/2017.
  */
 
-public class MyFigure {
+public abstract class MyFigure {
 
     /**
      * the actual bitmap
@@ -32,32 +35,21 @@ public class MyFigure {
     /**
      * Currently set spped of the figure.
      */
-    private MySpeed mySpeed;
+    private MySpeed speed;
+
+    /**
+     * Ball radius.
+     */
+    private int radius;
+
     private static final String TAG = MyFigure.class.getSimpleName();
 
     public MyFigure(Bitmap bitmap, int x, int y) {
         this.bitmap = bitmap;
         this.x = x;
         this.y = y;
-    }
-
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-    public int getX() {
-        return x;
-    }
-    public void setX(int x) {
-        this.x = x;
-    }
-    public int getY() {
-        return y;
-    }
-    public void setY(int y) {
-        this.y = y;
+        radius = bitmap.getHeight()/2; // Assume bitmap is equal - sided
+        Log.d(TAG, "Creating a new figure at: x= " + x +" y= " + y);
     }
 
     public boolean isTouched() {
@@ -78,41 +70,22 @@ public class MyFigure {
         canvas.drawBitmap(bitmap, x - (bitmap.getWidth() / 2), y - (bitmap.getHeight() / 2), null);
     }
 
-    /**
-     * This method checks if the figure is currently being touched
-     * by the user.
-     *
-     * @param eventX X coordinate.
-     * @param eventY Y coordinate.
-     */
-    public void handleActionDown(int eventX, int eventY) {
-        if (eventX >= (x - bitmap.getWidth() / 2) && (eventX <= (x + bitmap.getWidth()/2))) {
-            if (eventY >= (y - bitmap.getHeight() / 2) && (y <= (y + bitmap.getHeight() / 2))) {
-                // droid touched
-                setTouched(true);
-            } else {
-                setTouched(false);
-            }
-        } else {
-            setTouched(false);
-        }
-    }
 
     /**
      * @return Returns reference to the currently set speed of the MyFigure instance.
      */
-    public MySpeed getMySpeed() {
-        return mySpeed;
+    public MySpeed getSpeed() {
+        return speed;
     }
 
-    public void setMySpeed(MySpeed mySpeed) {
-        if (this.mySpeed == null) {
-            this.mySpeed = mySpeed;
+    public void setSpeed(MySpeed mySpeed) {
+        if (this.speed == null) {
+            this.speed = mySpeed;
         } else {
-            this.mySpeed.setXv(mySpeed.getXv());
-            this.mySpeed.setYv(mySpeed.getYv());
-            this.mySpeed.setxDirection(mySpeed.getxDirection());
-            this.mySpeed.setyDirection(mySpeed.getyDirection());
+            this.speed.setXv(mySpeed.getXv());
+            this.speed.setYv(mySpeed.getYv());
+            this.speed.setxDirection(mySpeed.getxDirection());
+            this.speed.setyDirection(mySpeed.getyDirection());
         }
     }
 
@@ -121,23 +94,104 @@ public class MyFigure {
      */
     public void update() {
 
-        if (mySpeed == null) {
+        if (speed == null) {
             return;
         }
 
         if (!touched) {
-            x += (mySpeed.getXv() * mySpeed.getxDirection());
-            y += (mySpeed.getYv() * mySpeed.getyDirection());
+            x += (speed.getXv() * speed.getxDirection());
+            y += (speed.getYv() * speed.getyDirection());
         }
     }
+
+    /**
+     * Resolve figure collision.
+     */
+    public void collision(int screenWidth, int screenHeight, List<MyFigure> others) {
+        resolveWallCollision(screenWidth, screenHeight);
+    }
+
 
     /**
      * Reduce speed dividing it by given factor.
      *
      * @param redFactor Speed reduction factor.
      */
-    public void reduceSpeed(double redFactor) {
-        mySpeed.setXv(mySpeed.getXv()/redFactor);
-        mySpeed.setYv(mySpeed.getYv()/redFactor);
+    private void reduceSpeed(double redFactor) {
+        speed.setXv(speed.getXv()/redFactor);
+        speed.setYv(speed.getYv()/redFactor);
     }
+
+    private void resolveWallCollision(int screenWidth, int screenHeight) {
+        // check collision with right wall if heading right
+        if (speed.getxDirection() == MySpeed.DIRECTION_RIGHT
+                && x + radius >= screenWidth) {
+            speed.toggleXDirection();
+            reduceSpeed(1.5);
+        }
+        // check collision with left wall if heading left
+        if (speed.getxDirection() == MySpeed.DIRECTION_LEFT
+                && x - radius  <= 0) {
+            speed.toggleXDirection();
+            reduceSpeed(1.5);
+        }
+        // check collision with bottom wall if heading down
+        if (speed.getyDirection() == MySpeed.DIRECTION_DOWN
+                && y + radius >= screenHeight) {
+            speed.toggleYDirection();
+            reduceSpeed(1.5);
+        }
+        // check collision with top wall if heading up
+        if (speed.getyDirection() == MySpeed.DIRECTION_UP
+                && y - radius <= 0) {
+            speed.toggleYDirection();
+            reduceSpeed(1.5);
+        }
+    }
+
+    /**
+     * Callback for move action.
+     *
+     * @param eventX X coordinate.
+     * @param eventY Y coordinate.
+     */
+    public abstract void handleActionMove(int eventX, int eventY);
+
+    /**
+     * Callback for down click action.
+     *
+     * @param eventX X coordinate.
+     * @param eventY Y coordinate.
+     */
+    public abstract void handleActionDown(int eventX, int eventY);
+
+    /**
+     * Callback for up click action.
+     *
+     * @param eventX X coordinate.
+     * @param eventY Y coordinate.
+     */
+    public abstract void handleActionUp(int eventX, int eventY);
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+    public int getX() {
+        return x;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+    public int getWidth() { return bitmap.getWidth(); }
+    public int getHeight() { return bitmap.getHeight(); }
+    public int getRadius() { return radius; }
 }
