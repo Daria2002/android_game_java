@@ -1,22 +1,28 @@
-package suza.project.wackyballs;
+package suza.project.wackyballs.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
+import suza.project.wackyballs.game.state.IGameState;
+import suza.project.wackyballs.game.state.RunningGameState;
 import suza.project.wackyballs.model.FigureContainer;
 import suza.project.wackyballs.model.MyExplosion;
-import suza.project.wackyballs.model.components.MySpeed;
 
 
 /**
- * This class reprents a game panel used for updating the game state
- * and rendering objects on screen during gameplay.
+ * This class represents a game panel used for updating the game state
+ * and rendering objects on screen during gameplay. Main goal of this
+ * class is to start and stop game loop thread. Rest of the methods
+ * will be delegated to the current game state.
  *
  * Created by lmark on 02/08/2017.
  */
@@ -42,8 +48,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      * Figure container - holds all figureContainer on screen.
      */
     private FigureContainer figureContainer;
-    private MyExplosion[] explosions = new MyExplosion[10];
-    private static final int EXPLOSION_COUNT = 50;
+
+    /**
+     * Current game state. Its methods will be delegated to when update / draw / on touch
+     * is called.
+     */
+    private IGameState gameState;
+
+    private Point screenDimension = new Point();
 
     /**
      * Game panel constructor. It starts the main game thread,
@@ -54,6 +66,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public GamePanel(Context context) {
         super(context);
 
+        // Get screen dimensions
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        display.getSize(screenDimension);
+
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
 
@@ -62,6 +79,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         // initialize the game loop thread
         gameLoopThread = new MainThread(getHolder(), this);
+
+        // Initialize current game state
+        gameState = new RunningGameState(this);
+
+        Log.d(TAG, "Screen dimensions: x = "
+                + screenDimension.x + " y = " + screenDimension.y);
     }
 
     /**
@@ -87,15 +110,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         gameLoopThread.start();
 
         Log.d(TAG, "MainThread successfully started");
-
-        for (int i = 0; i < explosions.length; i++) {
-            explosions[i] = null;
-        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
+        // Unimplemented
     }
 
     /**
@@ -126,18 +145,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            figureContainer.handleActionDown((int)event.getX(), (int)event.getY());
-            Log.d(TAG, "Coordinates: x=" + event.getX() + ",y=" + event.getY());
 
-        } if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            figureContainer.handleActionMove((int)event.getX(), (int)event.getY());
-
-        } if (event.getAction() == MotionEvent.ACTION_UP) {
-            // touch was released
-            figureContainer.handleActionUp((int)event.getX(), (int)event.getY());
-        }
-        return true;
+        // Delegate method call to the current game state
+        return gameState.onTouchEvent(event);
     }
 
     /**
@@ -168,13 +178,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawColor(Color.BLACK);
         this.draw(canvas);
         displayFps(canvas, avgFps);
-        figureContainer.draw(canvas);
 
-        for (MyExplosion explosion:explosions) {
-            if (explosion != null) {
-                explosion.draw(canvas);
-            }
-        }
+        // Delegate method call to the current game state
+        gameState.draw(canvas);
     }
 
     /**
@@ -198,39 +204,28 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void update() {
 
-        figureContainer.update();
-
-        for (MyExplosion explosion:explosions) {
-            if (explosion != null) {
-                explosion.update();
-            }
-        }
+        // Delegate method call to the current game state
+        gameState.update();
     }
 
     /**
-     * Generate a new explosion.
-     * @param x X coordinate of the explosion.
-     * @param y Y coordiante of the explosion.
+     * Set new game state.
+     *
+     * @param gameState New game state.
      */
-    private void generateExplosion(double x, double y) {
-        // check if explosion is null or if it is still active
-        int selectedExplosion = -1;
-        MyExplosion explosion = null;
-
-        for (int i = 0, eCount = explosions.length; i < eCount; i++) {
-            explosion = explosions[i];
-            if (explosion != null && explosion.isAlive()) {
-                continue;
-            }
-            selectedExplosion = i;
-            break;
-        }
-
-        if (selectedExplosion == -1) {
-            Log.d(TAG, "Cannot create any more explosions.");
-            return;
-        }
-
-        explosions[selectedExplosion] = new MyExplosion(EXPLOSION_COUNT, (float)x, (float)y);
+    public void setGameState(IGameState gameState) {
+        this.gameState = gameState;
     }
+
+    /**
+     * @return Return screen width.
+     */
+    public int getScreenWidth() {
+        return screenDimension.x;
+    }
+
+    public int getScreenHeight() {
+        return screenDimension.y;
+    }
+
 }

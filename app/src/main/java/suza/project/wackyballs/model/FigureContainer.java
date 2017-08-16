@@ -1,12 +1,11 @@
 package suza.project.wackyballs.model;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import suza.project.wackyballs.GamePanel;
+import suza.project.wackyballs.game.GamePanel;
 import suza.project.wackyballs.model.components.MyFigure;
 
 

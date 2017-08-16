@@ -1,10 +1,13 @@
-package suza.project.wackyballs;
+package suza.project.wackyballs.game;
 
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.text.DecimalFormat;
+
+import suza.project.wackyballs.MainActivity;
+import suza.project.wackyballs.game.GamePanel;
 
 /**
  * This thread is used for running the GameLoop. Game loop will update the game state and

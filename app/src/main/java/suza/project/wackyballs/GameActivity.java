@@ -1,10 +1,13 @@
 package suza.project.wackyballs;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+
+import suza.project.wackyballs.game.GamePanel;
 
 /**
  * This class represents the main game activity. It sets the game panel

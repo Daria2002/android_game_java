@@ -8,12 +8,12 @@ import android.util.Log;
 
 import java.util.List;
 
-import suza.project.wackyballs.GamePanel;
+import suza.project.wackyballs.game.GamePanel;
 import suza.project.wackyballs.R;
 import suza.project.wackyballs.model.components.MyAnimation;
 import suza.project.wackyballs.model.components.MyFigure;
 import suza.project.wackyballs.model.components.MySpeed;
-import suza.project.wackyballs.util.RandomRange;
+import suza.project.wackyballs.util.Util;
 
 /**
  * This class implements figure action movements. Figure can be dragged on screen
@@ -70,11 +70,11 @@ public class DefaultFigure extends MyAnimation {
         super(BitmapFactory.decodeResource(
                 gamePanel.getResources(),
                 R.drawable.face_animation),
-                RandomRange.randomInteger(0, gamePanel.getWidth()), -10,
+                Util.randomInteger(0, gamePanel.getScreenWidth()), -10,
                 10, 4);
         super.setSpeed(new MySpeed(
-                RandomRange.randomInteger(-20, 20),
-                RandomRange.randomInteger(1, 20)
+                Util.randomInteger(-20, 20),
+                Util.randomInteger(1, 20)
         ));
 
         this.gamePanel = gamePanel;

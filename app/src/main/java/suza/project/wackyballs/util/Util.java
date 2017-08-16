@@ -1,12 +1,15 @@
 package suza.project.wackyballs.util;
 
+
 import java.util.Random;
+
+import suza.project.wackyballs.model.MyExplosion;
 
 /**
  * Created by lmark on 15/08/2017.
  */
 
-public final class RandomRange {
+public final class Util {
 
     private static final Random random = new Random();
 
