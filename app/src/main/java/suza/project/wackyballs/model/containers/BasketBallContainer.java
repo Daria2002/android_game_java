@@ -5,7 +5,6 @@ import android.util.Log;
 
 import suza.project.wackyballs.game.GamePanel;
 import suza.project.wackyballs.model.components.AbstractFigure;
-import suza.project.wackyballs.model.components.FigureContainer;
 import suza.project.wackyballs.model.properties.FigureState;
 import suza.project.wackyballs.model.properties.FigureType;
 
@@ -74,29 +73,5 @@ public class BasketBallContainer extends FigureContainer {
             removeFigure(i);
             Log.d(TAG, "Figure removed. " + getFigureCount() + " left.");
         }
-    }
-
-    public void increaseScore(int amount) {
-        score += amount;
-    }
-
-    public void decreaseScore(int amount) {
-        score -= amount;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void increaseLives(int amount) {
-        lives += amount;
-    }
-
-    public void decreaseLives(int amount) {
-        lives -= amount;
-    }
-
-    public int getLives() {
-        return  lives;
     }
 }

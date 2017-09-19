@@ -3,7 +3,6 @@ package suza.project.wackyballs.model.containers;
 import android.util.Log;
 
 import suza.project.wackyballs.game.GamePanel;
-import suza.project.wackyballs.model.components.FigureContainer;
 import suza.project.wackyballs.model.properties.FigureState;
 
 

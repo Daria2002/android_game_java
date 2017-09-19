@@ -10,9 +10,7 @@ import java.util.List;
 import suza.project.wackyballs.R;
 import suza.project.wackyballs.game.GamePanel;
 import suza.project.wackyballs.model.components.AbstractFigure;
-import suza.project.wackyballs.model.components.FigureContainer;
 import suza.project.wackyballs.model.containers.BasketBallContainer;
-import suza.project.wackyballs.model.containers.GeneralFigureContainer;
 import suza.project.wackyballs.model.properties.Collision;
 import suza.project.wackyballs.model.properties.FigureState;
 import suza.project.wackyballs.model.properties.FigureType;
@@ -185,8 +183,8 @@ public class BasketFigure extends AbstractFigure {
             basketList.remove(i);
         }
 
-        figureContainer.increaseLives(life);
-        figureContainer.increaseScore(score * BALL_SCORE);
+        livesChanged(life);
+        scoreChanged(score * BALL_SCORE);
     }
 
     @Override

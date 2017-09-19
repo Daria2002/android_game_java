@@ -12,6 +12,7 @@ import suza.project.wackyballs.model.properties.Collision;
 import suza.project.wackyballs.model.properties.FigureState;
 import suza.project.wackyballs.model.properties.FigureType;
 import suza.project.wackyballs.model.properties.MySpeed;
+import suza.project.wackyballs.util.IGameInfoListener;
 import suza.project.wackyballs.util.Util;
 
 /**
@@ -75,7 +76,9 @@ public class BadFigure extends AbstractFigure {
         // If out of the bottom of the screen set to DEAD
         if (getY() > gamePanel.getHeight() + 2 * getRadius()) {
             setState(FigureState.DEAD);
-            figureContainer.decreaseLives(1);
+
+            // Signal that the lives changed
+            livesChanged(-1);
         }
     }
 

@@ -1,4 +1,4 @@
-package suza.project.wackyballs.model.components;
+package suza.project.wackyballs.model.containers;
 
 import android.graphics.Canvas;
 
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import suza.project.wackyballs.game.GamePanel;
+import suza.project.wackyballs.model.components.AbstractFigure;
 
 /**
  * A generic figure container used for storing, updating and drawing figures.
@@ -153,6 +154,7 @@ public class FigureContainer {
     }
 
     public void removeFigure(int index) {
+        figureList.get(index).removeAllListeners();
         figureList.remove(index);
     }
 }

@@ -4,11 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import suza.project.wackyballs.model.properties.FigureState;
 import suza.project.wackyballs.model.properties.FigureType;
 import suza.project.wackyballs.model.properties.MySpeed;
+import suza.project.wackyballs.util.IGameInfoListener;
+import suza.project.wackyballs.util.IGameInfoProvider;
 
 /**
  * This class represents a non-animated figure with some basic properties(speed, position,
@@ -17,7 +20,7 @@ import suza.project.wackyballs.model.properties.MySpeed;
  * Created by lmark on 03/08/2017.
  */
 
-public abstract class AbstractFigure {
+public abstract class AbstractFigure implements IGameInfoProvider {
 
     /**
      * the actual bitmap
@@ -66,6 +69,11 @@ public abstract class AbstractFigure {
     private int mass = 5;
 
     private static final String TAG = AbstractFigure.class.getSimpleName();
+
+    /**
+     * Listener list.
+     */
+    private List<IGameInfoListener> listenerList;
 
     public AbstractFigure(Bitmap bitmap, int x, int y) {
         this.bitmap = bitmap;
@@ -164,6 +172,48 @@ public abstract class AbstractFigure {
      */
     public abstract void handleActionUp(int eventX, int eventY);
 
+    @Override
+    public void addGameInfoListener(IGameInfoListener listener) {
+        if (listenerList == null) {
+            listenerList = new ArrayList<>();
+        }
+
+        listenerList.add(listener);
+    }
+
+    @Override
+    public void removeAllListeners() {
+        if (listenerList == null) {
+            Log.d(TAG, "Cannot remove listeners");
+            return;
+        }
+
+        int i = 0;
+        while (i > listenerList.size()) {
+            listenerList.remove(i);
+        }
+    }
+
+    /**
+     * Signals that the score changed.
+     * @param amount Amount score changed.
+     */
+    public void scoreChanged(int amount) {
+        for (IGameInfoListener listener: listenerList) {
+            listener.onScoreChanged(amount);
+        }
+    }
+
+    /**
+     * Signals that the lives changed.
+     * @param amount Amount lives changed.
+     */
+    public void livesChanged(int amount) {
+        for (IGameInfoListener listener: listenerList) {
+            listener.onLivesChanged(amount);
+        }
+    }
+
     public Bitmap getBitmap() {
         return bitmap;
     }
@@ -189,11 +239,9 @@ public abstract class AbstractFigure {
             return radius;
         }
     }
-
     public void setRadius(int radius) {
         this.radius = radius;
     }
-
     public FigureType getType() {
         return type;
     }
@@ -212,16 +260,13 @@ public abstract class AbstractFigure {
     public void setState(FigureState state) {
         this.state = state;
     }
-
     public int getMass() {
         return mass;
     }
-
     public void setMass(int mass) {
         this.mass = mass;
     }
     public boolean equals(AbstractFigure figure) {
         return getID() == figure.getID();
     }
-
 }

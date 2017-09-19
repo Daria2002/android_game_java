@@ -1,5 +1,6 @@
 package suza.project.wackyballs;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    public static final int REQUST_GET_SCORE = 0;
 
     @BindView(R.id.btnPlay)
     Button btnPlay;
@@ -48,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
         stateSpinner.setAdapter(adapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MainActivity.REQUST_GET_SCORE &&
+                resultCode == Activity.RESULT_OK) {
+
+            // Start result activity
+            //Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+            //startActivity(intent);
+        }
+    }
+
     /**
      * Action performed when play button is pressed.
      *
@@ -57,9 +70,8 @@ public class MainActivity extends AppCompatActivity {
     public void playButtonAction(View view) {
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
         intent.putExtra("state", (String)stateSpinner.getSelectedItem());
-        startActivity(intent);
+        startActivityForResult(intent, MainActivity.REQUST_GET_SCORE);
     }
-
 
     /**
      * Action performed when exit button is pressed.

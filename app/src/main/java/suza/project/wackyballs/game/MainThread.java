@@ -6,9 +6,6 @@ import android.view.SurfaceHolder;
 
 import java.text.DecimalFormat;
 
-import suza.project.wackyballs.MainActivity;
-import suza.project.wackyballs.game.GamePanel;
-
 /**
  * This thread is used for running the GameLoop. Game loop will update the game state and
  * render new objects on screen via GamePanel methods.
@@ -91,7 +88,7 @@ public class MainThread extends Thread {
     private GamePanel gamePanel;
 
     private boolean running;
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainThread.class.getSimpleName();
 
     /**
      * Constructor for the Main thread, initializes class variables.
@@ -131,24 +128,34 @@ public class MainThread extends Thread {
         sleepTime = 0;
 
         while (running) {
+
+            // Finish thread internally
+            if (gamePanel.isFinished()) {
+                Log.d(TAG, "Thread finishing.");
+                running = false;
+                return;
+            }
+
             canvas = null;
             // try locking the canvas for exclusive pixel editing
             // in the surface
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
+
                     beginTime = System.currentTimeMillis();
-                    framesSkipped = 0;	// resetting the frames skipped
+                    framesSkipped = 0;    // resetting the frames skipped
                     // update game state
                     this.gamePanel.update();
 
                     // render state to the screen
                     // draws the canvas on the panel
                     this.gamePanel.render(canvas);
+
                     // calculate how long did the cycle take
                     timeDiff = System.currentTimeMillis() - beginTime;
                     // calculate sleep time
-                    sleepTime = (int)(FRAME_PERIOD - timeDiff);
+                    sleepTime = (int) (FRAME_PERIOD - timeDiff);
 
                     if (sleepTime > 0) {
                         // if sleepTime > 0 we're OK
@@ -156,13 +163,14 @@ public class MainThread extends Thread {
                             // send the thread to sleep for a short period
                             // very useful for battery saving
                             Thread.sleep(sleepTime);
-                        } catch (InterruptedException e) {}
+                        } catch (InterruptedException e) {
+                        }
                     }
 
                     while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
                         // we need to catch up
                         this.gamePanel.update(); // update without rendering
-                        sleepTime += FRAME_PERIOD;	// add frame period to check if in next frame
+                        sleepTime += FRAME_PERIOD;    // add frame period to check if in next frame
                         framesSkipped++;
                     }
 
@@ -248,4 +256,5 @@ public class MainThread extends Thread {
         }
         Log.d(TAG + ".initTimingElements()", "Timing elements for stats initialised");
     }
+
 }

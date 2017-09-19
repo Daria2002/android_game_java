@@ -1,10 +1,13 @@
 package suza.project.wackyballs.game;
 
 import android.content.Context;
+import android.content.ReceiverCallNotAllowedException;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -13,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.WindowManager;
 
 import suza.project.wackyballs.state.IGameState;
+import suza.project.wackyballs.util.IGameFinishedListener;
 
 
 /**
@@ -47,7 +51,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     private IGameState gameState;
 
+    /**
+     * Screen dimensions.
+     */
     private Point screenDimension = new Point();
+
+    /**
+     *  Check if game is finished.
+     */
+    private boolean finished = false;
+
+    IGameFinishedListener gameFinishedListener;
 
     /**
      * Game panel constructor. It starts the main game thread,
@@ -126,23 +140,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         Log.d(TAG, "MainThread was successfully stopped.");
     }
 
-    public void stop() {
-        Log.d(TAG, "Stopping thread.");
-        boolean retry = true;
-        gameLoopThread.setRunning(false);
-
-        while (retry) {
-            try {
-                gameLoopThread.join();
-                // If thread is successfully joined stop the loop
-                retry = false;
-
-            } catch (InterruptedException ignorable) {
-                // Ignorable
-            }
-        }
-        Log.d(TAG, "Stopped thread");
-    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -227,8 +224,40 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return screenDimension.x;
     }
 
+    /**
+     * @return Return screen height.
+     */
     public int getScreenHeight() {
         return screenDimension.y;
+    }
+
+    /**
+     * @return True if game is finished otherwise false.
+     */
+    public boolean isFinished() {
+        return finished;
+    }
+
+    /**
+     * Signals that the game is finished.
+     *
+     * @param score Current game score.
+     */
+    public void finish(int score) {
+        Log.d(TAG, "Finishing the game...");
+
+        if (gameFinishedListener != null) {
+            gameFinishedListener.gameFinished(score);
+        }
+
+        finished = true;
+    }
+
+    /**
+     * @param listener New listener checking for game finish.
+     */
+    public void setGameFinishedListener(IGameFinishedListener listener) {
+        this.gameFinishedListener = listener;
     }
 
 }

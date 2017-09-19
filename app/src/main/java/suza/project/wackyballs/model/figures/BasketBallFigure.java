@@ -77,7 +77,9 @@ public class BasketBallFigure extends AbstractAnimation {
         // If out of the bottom of the screen set to DEAD
         if (getY() > panel.getHeight() + 2*getRadius()) {
             setState(FigureState.DEAD);
-            figureContainer.decreaseLives(1);
+
+            // Signal that the lives changed
+            livesChanged(-1);
         }
     }
 

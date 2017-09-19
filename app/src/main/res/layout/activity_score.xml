@@ -1,56 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="suza.project.wackyballs.MainActivity">
+    tools:context="suza.project.wackyballs.ScoreActivity">
 
-    <TextView
-        android:id="@+id/tvScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SCORE"
-        android:layout_centerHorizontal="true"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:textColor="@color/colorAccent"
-        />
-
-    <Button
-        android:id="@+id/btnStartAfterScore"
-        android:text="PLAY"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/holo_blue_light"
-        android:shadowColor="@android:color/white"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingBottom="20dp"
-        android:paddingTop="40dp"
-        android:paddingRight="60dp"
-        android:paddingLeft="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        />
-
-    <Button
-        android:id="@+id/btnExitAfterScore"
-        android:text="EXIT"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="0dp"
-        android:paddingTop="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:shadowColor="@android:color/white"
-        android:background="@android:color/darker_gray"/>
-
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
