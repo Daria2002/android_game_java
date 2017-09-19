@@ -7,25 +7,45 @@
     tools:context="suza.project.wackyballs.MainActivity">
 
     <TextView
-        android:id="@+id/tvGame"
+        android:id="@+id/tvResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wacky Balls"
+        android:text="RESULT"
         android:layout_centerHorizontal="true"
-        android:textSize="50dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
         />
 
     <Button
-        android:id="@+id/btnPlay"
-        android:text="PLAY"
+        android:id="@+id/btnPlayAgain"
+        android:text="PLAY AGAIN"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/holo_blue_light"
+        android:shadowColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        />
+
+    <Button
+        android:id="@+id/btnSaveResult"
+        android:text="SAVE RESULT"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_orange_light"
         android:shadowColor="@android:color/white"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -35,26 +55,19 @@
         android:paddingLeft="60dp"
         />
 
-    <Spinner
-        android:id="@+id/state_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnPlay"
-        android:layout_centerInParent="true">
-    </Spinner>
-
     <Button
-        android:id="@+id/btnExit"
+        android:id="@+id/btnExitAfterGame"
         android:text="EXIT"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="0dp"
         android:paddingTop="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:shadowColor="@android:color/white"
         android:background="@android:color/darker_gray"/>
+
 </RelativeLayout>

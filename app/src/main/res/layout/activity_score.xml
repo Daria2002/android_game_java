@@ -7,54 +7,50 @@
     tools:context="suza.project.wackyballs.MainActivity">
 
     <TextView
-        android:id="@+id/tvGame"
+        android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wacky Balls"
+        android:text="SCORE"
         android:layout_centerHorizontal="true"
-        android:textSize="50dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
         />
 
     <Button
-        android:id="@+id/btnPlay"
+        android:id="@+id/btnStartAfterScore"
         android:text="PLAY"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/holo_blue_light"
         android:shadowColor="@android:color/white"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:paddingBottom="40dp"
+        android:paddingBottom="20dp"
         android:paddingTop="40dp"
         android:paddingRight="60dp"
         android:paddingLeft="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         />
 
-    <Spinner
-        android:id="@+id/state_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnPlay"
-        android:layout_centerInParent="true">
-    </Spinner>
-
     <Button
-        android:id="@+id/btnExit"
+        android:id="@+id/btnExitAfterScore"
         android:text="EXIT"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="0dp"
         android:paddingTop="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:shadowColor="@android:color/white"
         android:background="@android:color/darker_gray"/>
+
+
 </RelativeLayout>

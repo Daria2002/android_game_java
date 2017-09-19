@@ -12,10 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-import suza.project.wackyballs.game.state.IGameState;
-import suza.project.wackyballs.game.state.RunningGameState;
-import suza.project.wackyballs.model.FigureContainer;
-import suza.project.wackyballs.model.MyExplosion;
+import suza.project.wackyballs.state.IGameState;
 
 
 /**
@@ -43,11 +40,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      * Currently set average FPS.
      */
     private String avgFps;
-
-    /**
-     * Figure container - holds all figureContainer on screen.
-     */
-    private FigureContainer figureContainer;
 
     /**
      * Current game state. Its methods will be delegated to when update / draw / on touch
@@ -80,9 +72,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         // initialize the game loop thread
         gameLoopThread = new MainThread(getHolder(), this);
 
-        // Initialize current game state
-        gameState = new RunningGameState(this);
-
         Log.d(TAG, "Screen dimensions: x = "
                 + screenDimension.x + " y = " + screenDimension.y);
     }
@@ -94,11 +83,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
-        // Initialize figure container..
-        if (figureContainer == null) {
-            figureContainer = new FigureContainer(this, 10);
-        }
 
         // Solution for freezing when app is paused (?)
         if (!gameLoopThread.isAlive()) {
@@ -142,12 +126,31 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         Log.d(TAG, "MainThread was successfully stopped.");
     }
 
+    public void stop() {
+        Log.d(TAG, "Stopping thread.");
+        boolean retry = true;
+        gameLoopThread.setRunning(false);
 
+        while (retry) {
+            try {
+                gameLoopThread.join();
+                // If thread is successfully joined stop the loop
+                retry = false;
+
+            } catch (InterruptedException ignorable) {
+                // Ignorable
+            }
+        }
+        Log.d(TAG, "Stopped thread");
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        // Delegate method call to the current game state
-        return gameState.onTouchEvent(event);
+        // Synchronize touch events
+        synchronized (getHolder()) {
+            // Delegate method call to the current game state
+            return gameState.onTouchEvent(event);
+        }
     }
 
     /**
@@ -177,7 +180,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         // display fps
         canvas.drawColor(Color.BLACK);
         this.draw(canvas);
-        displayFps(canvas, avgFps);
+        //displayFps(canvas, avgFps);
 
         // Delegate method call to the current game state
         gameState.draw(canvas);
@@ -199,8 +202,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * Update game panel state. Currently handles collision detection
-     * between a single MyFigure object and the wall.
+     * Update game panel state. Currently handles resolveCollision detection
+     * between a single AbstractFigure object and the wall.
      */
     public void update() {
 
