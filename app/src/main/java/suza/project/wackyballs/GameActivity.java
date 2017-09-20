@@ -29,6 +29,8 @@ import suza.project.wackyballs.util.IGameFinishedListener;
 public class GameActivity extends AppCompatActivity {
 
     private static final String TAG = GameActivity.class.getSimpleName();
+    public static final String SCORE_KEY = "score";
+
     private GamePanel gamePanel;
 
     /**
@@ -41,11 +43,15 @@ public class GameActivity extends AppCompatActivity {
             // Game is finished, do all the final things here
             Log.d(TAG, "Listener - Finishing the activity.");
 
-            // Finish current activity, and start result activity
+            //GameActivity.this.setResult(Activity.RESULT_OK, new Intent().putExtra(SCORE_KEY, score));
+            //GameActivity.this.finish();
+
+            // Send score
             Intent intent = new Intent(GameActivity.this, ResultActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+            intent.putExtra(GameActivity.SCORE_KEY, score);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            GameActivity.this.startActivity(intent);
+            GameActivity.this.finish();
         }
     };
 
@@ -94,56 +100,5 @@ public class GameActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.d(TAG, "Destroying main view...");
         super.onDestroy();
-    }
-
-    /**
-     * Action performed on game activity finish.
-     *
-     * @param finalScore Final game score.
-     */
-    private void onFinish(final int finalScore) {
-
-        // Make finishing alert dialog
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(GameActivity.this,
-                    android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(GameActivity.this);
-        }
-
-        // Set edit text
-        final EditText input = new EditText(this);
-        input.setHint("Enter name");
-        builder.setView(input);
-        Looper.prepare();
-        builder.setTitle("GAME OVER")
-                .setMessage("Final score: " + finalScore)
-                .setPositiveButton("Save score", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Save score click
-                        saveScoreLocally(input.getText().toString(), finalScore);
-                    }
-                })
-                .setNegativeButton("Main Menu", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Main menu click
-                        GameActivity.this.finish();
-                    }
-                })
-                .show();
-    }
-
-    /**
-     * Save player name and score locally.
-     *
-     * @param name Player name.
-     * @param score Player score.
-     */
-    private void saveScoreLocally(String name, int score) {
-        SharedPreferences sharedPref = GameActivity.this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(name, score);
-        editor.commit();
     }
 }

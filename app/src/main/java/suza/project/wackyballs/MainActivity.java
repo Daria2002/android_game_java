@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.state_spinner)
     Spinner stateSpinner;
 
+    @BindView(R.id.btnHighscore)
+    Button btnHighscore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +57,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MainActivity.REQUST_GET_SCORE &&
                 resultCode == Activity.RESULT_OK) {
-
-            // Start result activity
-            //Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-            //startActivity(intent);
         }
     }
 
@@ -82,5 +81,11 @@ public class MainActivity extends AppCompatActivity {
     public void exitButtonAction(View view) {
         finish();
         System.exit(0);
+    }
+
+    @OnClick(R.id.btnHighscore)
+    public void highScoreButtonAction(View view) {
+        Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+        startActivity(intent);
     }
 }
