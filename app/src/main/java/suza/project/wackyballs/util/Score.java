@@ -3,12 +3,13 @@ package suza.project.wackyballs.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
-
-import suza.project.wackyballs.ResultActivity;
 
 /**
  * Score helper class.
@@ -19,16 +20,30 @@ import suza.project.wackyballs.ResultActivity;
 public class Score {
 
     /**
+     * Save score constant.
+     */
+    public static final String SAVE_SCORE_REQUEST = "save";
+
+    /**
      * Save player name and score locally in Shared preferences
      *
      * @param name Player name.
      * @param score Player score.
      * @param sharedPreferences Application shared preferences.
+     * @return True if score is saved, otherwise false.
      */
-    public static void saveScoreLocally(String name, int score, SharedPreferences sharedPreferences) {
+    public static boolean saveScoreLocally(String name, int score, SharedPreferences sharedPreferences) {
+        Object getScore = sharedPreferences.getAll().get(name);
+
+        // Don't save if current score is less than new score
+        if (getScore != null && (Integer)getScore > score) {
+            return false;
+        }
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(name, score);
         editor.commit();
+        return true;
     }
 
 
@@ -61,5 +76,6 @@ public class Score {
 
         return Collections.unmodifiableMap(sortedMap);
     }
+
 }
 

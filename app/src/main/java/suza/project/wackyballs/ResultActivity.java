@@ -9,31 +9,43 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Looper;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import suza.project.wackyballs.util.Score;
 
 public class ResultActivity extends AppCompatActivity {
 
+    private static final int TABLE_TEXT_SIZE = 30;
+
+    @BindView(R.id.mainMenuButton)
+    Button mainMenuButton;
+
+    @BindView(R.id.table_main)
+    TableLayout tableLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         setContentView(R.layout.activity_result);
+        ButterKnife.bind(this);
 
         // Full screen application
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -62,20 +74,30 @@ public class ResultActivity extends AppCompatActivity {
         Map<String, Integer> scoreMap =
                 Score.getSortedScoreMap(ResultActivity.this.getPreferences(Context.MODE_PRIVATE));
 
-        // Get table layout - nested in multiple layouts
-        TableLayout tableLayout = (TableLayout) findViewById(R.id.table_main);
+        // Configure row margin
+        TableLayout.LayoutParams tableRowParams=
+                new TableLayout.LayoutParams(
+                        TableLayout.LayoutParams.MATCH_PARENT,
+                        TableLayout.LayoutParams.WRAP_CONTENT);
+        int leftMargin=10;
+        int topMargin=2;
+        int rightMargin=10;
+        int bottomMargin=2;
+        tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
 
         // add all table rows
         int i = 1;
         for (Map.Entry<String, Integer> entry : scoreMap.entrySet()) {
             TableRow tbrow = new TableRow(this);
+            tbrow.setLayoutParams(tableRowParams);
+            //TODO Add row graphics
 
             // Add index cell
             TextView t1v = new TextView(this);
-            t1v.setText(String.format(" %d. ", i));
+            t1v.setText(String.format(" %d.  ", i));
             t1v.setTextColor(Color.BLACK);
             t1v.setGravity(Gravity.CENTER);
-            t1v.setTextSize(25);
+            t1v.setTextSize(TABLE_TEXT_SIZE);
             tbrow.addView(t1v);
             i++;
 
@@ -84,7 +106,7 @@ public class ResultActivity extends AppCompatActivity {
             t2v.setText(String.format(" %s ", entry.getKey()));
             t2v.setTextColor(Color.BLACK);
             t2v.setGravity(Gravity.CENTER);
-            t2v.setTextSize(25);
+            t2v.setTextSize(TABLE_TEXT_SIZE);
             tbrow.addView(t2v);
 
             // Add score cell
@@ -92,7 +114,7 @@ public class ResultActivity extends AppCompatActivity {
             t3v.setText(String.format(" %s ", entry.getValue()));
             t3v.setTextColor(Color.BLACK);
             t3v.setGravity(Gravity.CENTER);
-            t3v.setTextSize(25);
+            t3v.setTextSize(TABLE_TEXT_SIZE);
             tbrow.addView(t3v);
 
             // Add to tablelayout
@@ -126,18 +148,16 @@ public class ResultActivity extends AppCompatActivity {
         filterArray[0] = new InputFilter.LengthFilter(8);
         input.setFilters(filterArray);
 
+        // Add input to builder
         builder.setView(input);
 
+        // Configure builder
         builder.setTitle("GAME OVER")
                 .setMessage("Final score: " + finalScore)
                 .setPositiveButton("Save score", new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Save score click
-                        Score.saveScoreLocally(
-                                input.getText().toString(),
-                                finalScore,
-                                ResultActivity.this.getPreferences(Context.MODE_PRIVATE));
-                        initializeTable();
+                        // Do nothing...
                     }
                 })
                 .setNegativeButton("Main Menu", new DialogInterface.OnClickListener() {
@@ -146,7 +166,59 @@ public class ResultActivity extends AppCompatActivity {
                         ResultActivity.this.finish();
                     }
                 })
-                .show();
+                .setCancelable(false);
+
+        // Create and show dialog
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Override onclick listener - prevent closing when user enters empty text
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputString = input.getText().toString();
+
+                // If text box is empty, do nothing
+                if (inputString.trim().isEmpty()) {
+                    Toast.makeText(
+                            ResultActivity.this,
+                            "Please enter your name.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Try to save the score
+                boolean saved = Score.saveScoreLocally(
+                        inputString,
+                        finalScore,
+                        ResultActivity.this.getPreferences(Context.MODE_PRIVATE));
+
+                // If score is not saved, notify user
+                if (!saved) {
+                    Toast.makeText(
+                            ResultActivity.this,
+                            String.format(
+                                    "Player \"%s\" already has higher score logged.",
+                                    inputString),
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Dismiss dialog
+                dialog.dismiss();
+                initializeTable();
+            }
+        });
+    }
+
+    /**
+     * Exit button action.
+     *
+     * @param view View
+     */
+    @OnClick(R.id.mainMenuButton)
+    public void exitButtonAction(View view) {
+        ResultActivity.this.finish();
     }
 
 }
