@@ -1,21 +1,15 @@
 package suza.project.wackyballs;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.os.Looper;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +23,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import suza.project.wackyballs.util.DatabaseRequest;
 import suza.project.wackyballs.util.Score;
 
 public class ResultActivity extends AppCompatActivity {
@@ -40,6 +35,11 @@ public class ResultActivity extends AppCompatActivity {
 
     @BindView(R.id.table_main)
     TableLayout tableLayout;
+
+    /**
+     * Indicates thate activity is accessed from main screen.
+     */
+    private boolean fromMainScreen = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,21 +58,54 @@ public class ResultActivity extends AppCompatActivity {
         // Check if intent was sent
         // If intent is found display alert dialog
         if (bundle != null){
+            fromMainScreen = false;
             Integer score = (Integer)intent.getExtras().get(GameActivity.SCORE_KEY);
             newScoreDialog(score);
         } else {
-            initializeTable();
+            initializeResults();
         }
     }
 
     /**
-     * Initializes score table.
+     * Initializes results and puts them in the table.
      */
-    private void initializeTable() {
+    private void initializeResults() {
+        Toast.makeText(
+                this,
+                "Fetching highscores...",
+                Toast.LENGTH_SHORT
+        ).show();
 
-        // Get score map
-        Map<String, Integer> scoreMap =
-                Score.getSortedScoreMap(ResultActivity.this.getPreferences(Context.MODE_PRIVATE));
+        // Async Task response for selecting all data
+        DatabaseRequest.AsyncResponse response = new DatabaseRequest.AsyncResponse() {
+            @Override
+            public void processFinished(Map<String, Integer> result, Exception e) {
+
+                // If exception occurred notify users
+                if (e != null) {
+                    Toast.makeText(
+                            ResultActivity.this,
+                            e.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
+                    return;
+                }
+
+                // Else set up table
+                setScoreTable(result);
+            }
+        };
+
+        // Fetch scores
+        Score.getSortedScoreOnline(this, response);
+    }
+
+    /**
+     * Sets given results in map in the score table.
+     *
+     * @param scoreMap Highscore map.
+     */
+    private void setScoreTable(Map<String, Integer> scoreMap) {
 
         // Configure row margin
         TableLayout.LayoutParams tableRowParams=
@@ -173,13 +206,61 @@ public class ResultActivity extends AppCompatActivity {
         dialog.show();
 
         // Override onclick listener - prevent closing when user enters empty text
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String inputString = input.getText().toString();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setOnClickListener(positiveOnClickListener(
+                        input,
+                        finalScore,
+                        dialog));
+    }
 
+    /**
+     * On click listener for alert dialog.
+     *
+     * @param input Player name.
+     * @param score Player score.
+     * @return Listener handle.
+     */
+    private View.OnClickListener positiveOnClickListener(
+            final EditText input,
+            final Integer score,
+            final AlertDialog dialog) {
+
+        // Online store score response
+        final DatabaseRequest.AsyncResponse asyncResponse = new DatabaseRequest.AsyncResponse() {
+            @Override
+            public void processFinished(Map<String, Integer> result, Exception e) {
+
+                // If exception occurred notify user
+                if (e != null) {
+                    Toast.makeText(
+                            ResultActivity.this,
+                            e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // If result is not null (request failed) notify user
+                if (result != null) {
+                    Toast.makeText(
+                            ResultActivity.this,
+                            "Player with that name already has higher score logged",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // Else dismiss dialog box
+                dialog.dismiss();
+                initializeResults();
+            }
+        };
+
+        // Construct onclick listener
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
                 // If text box is empty, do nothing
-                if (inputString.trim().isEmpty()) {
+                if (input.getText().toString().trim().isEmpty()) {
                     Toast.makeText(
                             ResultActivity.this,
                             "Please enter your name.",
@@ -187,28 +268,20 @@ public class ResultActivity extends AppCompatActivity {
                     return;
                 }
 
+                Toast toast = Toast.makeText(
+                        ResultActivity.this,
+                        "Processing request...",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+
                 // Try to save the score
-                boolean saved = Score.saveScoreLocally(
-                        inputString,
-                        finalScore,
-                        ResultActivity.this.getPreferences(Context.MODE_PRIVATE));
-
-                // If score is not saved, notify user
-                if (!saved) {
-                    Toast.makeText(
-                            ResultActivity.this,
-                            String.format(
-                                    "Player \"%s\" already has higher score logged.",
-                                    inputString),
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Dismiss dialog
-                dialog.dismiss();
-                initializeTable();
+                Score.saveScoreOnline(
+                        ResultActivity.this,
+                        input.getText().toString(),
+                        score,
+                        asyncResponse);
             }
-        });
+        };
     }
 
     /**

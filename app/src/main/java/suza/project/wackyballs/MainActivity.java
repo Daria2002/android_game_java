@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Configure spinner options
         String[] stateString = new String[] {
-                "BouncyBall", "GravityBall", "BasketBall"
+                "BasketBall", "BouncyBall", "GravityBall"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.support_simple_spinner_dropdown_item, stateString);

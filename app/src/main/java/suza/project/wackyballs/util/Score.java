@@ -3,13 +3,11 @@ package suza.project.wackyballs.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Score helper class.
@@ -55,7 +53,7 @@ public class Score {
      */
     public static Map<String, Integer> getSortedScoreMap(SharedPreferences sharedPreferences) {
 
-        // Get current score map
+        // Get current score map)
         final Map<String, Integer> scoreMap = (Map<String, Integer>) sharedPreferences.getAll();
 
         // Initialize sorted map
@@ -75,6 +73,36 @@ public class Score {
         sortedMap.putAll(scoreMap);
 
         return Collections.unmodifiableMap(sortedMap);
+    }
+
+    /**
+     * Runs a score request.
+     *
+     * @param context Activity context.
+     * @param response Task response, executed when task is finished.
+     */
+    public static void getSortedScoreOnline(
+            Context context,
+            DatabaseRequest.AsyncResponse response) {
+
+        DatabaseRequest request = new DatabaseRequest(context, response);
+        request.execute(DatabaseRequest.REQUEST_SELECT_ALL);
+    }
+
+    /**
+     * Get current player score.
+     *
+     * @param context Activity context.
+     * @param name Player name.
+     * @return String message. If null request passed without issue, oterwise not.
+     */
+    public static void saveScoreOnline(
+            Context context,
+            String name,
+            Integer score,
+            DatabaseRequest.AsyncResponse response) {
+        DatabaseRequest request = new DatabaseRequest(context, response);
+        request.execute(DatabaseRequest.REQUEST_INSERT_UPDATE, name, String.valueOf(score));
     }
 
 }
