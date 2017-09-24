@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -93,6 +94,8 @@ public class ResultActivity extends AppCompatActivity {
 
                 // Else set up table
                 setScoreTable(result);
+
+                findViewById(R.id.relative).invalidate();
             }
         };
 
@@ -153,6 +156,7 @@ public class ResultActivity extends AppCompatActivity {
             // Add to tablelayout
             tableLayout.addView(tbrow);
         }
+
     }
 
     /**

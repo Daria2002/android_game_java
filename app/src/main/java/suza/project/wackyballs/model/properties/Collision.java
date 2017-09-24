@@ -146,6 +146,13 @@ public class Collision {
         return true;
     }
 
+    /**
+     * Resolve ball figure collisions.
+     *
+     * @param fig1 Collision figure 1.
+     * @param fig2 Collision figure 2.
+     * @return True if collision was resolved, otherwise false.
+     */
     public static boolean resolveFigureCollision2(AbstractFigure fig1, AbstractFigure fig2) {
         int xDist = fig1.getX() - fig2.getX();
         int yDist = fig1.getY() - fig2.getY();
@@ -179,28 +186,15 @@ public class Collision {
                 double collisionWeightFig1 = 2 * fig2.getMass() / combinedMass;
                 double collisionWeightFig2 = 2 * fig1.getMass() / combinedMass;
 
-                if (fig1.getType() != FigureType.STATIC_BALL) {
-                    fig1.getSpeed().increaseSpeed(
-                            collisionWeightFig1 * xCollision, collisionWeightFig1 * yCollision);
-                }
+                fig1.getSpeed().increaseSpeed(
+                    collisionWeightFig1 * xCollision, collisionWeightFig1 * yCollision);
 
-                if (fig2.getType() != FigureType.STATIC_BALL) {
-                    fig2.getSpeed().reduceSpeed(
-                            collisionWeightFig2 * xCollision, collisionWeightFig2 * yCollision);
-                }
+                fig2.getSpeed().reduceSpeed(
+                        collisionWeightFig2 * xCollision, collisionWeightFig2 * yCollision);
 
+                // Set collision states
                 fig1.setState(FigureState.COLLISION);
                 fig2.setState(FigureState.COLLISION);
-
-                if (fig1.getType() == FigureType.STATIC_BALL) {
-                    fig2.setX(fig2.getX() + 5 * fig2.getSpeed().getxDirection());
-                    fig2.setY(fig2.getY() + 5 * fig2.getSpeed().getyDirection());
-                }
-
-                if (fig2.getType() == FigureType.STATIC_BALL) {
-                    fig1.setX(fig1.getX() + 5 * fig1.getSpeed().getxDirection());
-                    fig1.setY(fig1.getY() + 5 * fig1.getSpeed().getyDirection());
-                }
 
                 return true;
             }

@@ -134,10 +134,6 @@ public class TestFigure extends AbstractAnimation {
         }
     }
 
-    @Override
-    public void handleActionDoubleDown(int eventX, int eventY) {
-
-    }
 
     /**
      * Action up implementation. Check if user was touching this figure.

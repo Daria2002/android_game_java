@@ -35,7 +35,10 @@ public class GravityBallFigure extends AbstractAnimation {
                 Util.randomInteger(2, 5)
         ));
 
+        // Turn on gravity
         super.getSpeed().setGravity(true);
+
+        // Set figure states
         setState(FigureState.ALIVE);
         setType(FigureType.BALL);
     }
@@ -70,28 +73,10 @@ public class GravityBallFigure extends AbstractAnimation {
     }
 
     @Override
-    public void handleActionMove(int eventX, int eventY) {
-        // Unimplemented
-    }
-
-    @Override
-    public void handleActionDown(int eventX, int eventY) {
-        // Unimplemented
-    }
-
-    @Override
-    public void handleActionDoubleDown(int eventX, int eventY) {
-
-    }
-
-    @Override
-    public void handleActionUp(int eventX, int eventY) {
-        // Unimplemented
-    }
-
-    @Override
     public void update() {
         super.update();
+
+        // Update speed
         getSpeed().update();
     }
 }

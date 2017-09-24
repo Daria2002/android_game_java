@@ -101,6 +101,7 @@ public class Score {
             String name,
             Integer score,
             DatabaseRequest.AsyncResponse response) {
+
         DatabaseRequest request = new DatabaseRequest(context, response);
         request.execute(DatabaseRequest.REQUEST_INSERT_UPDATE, name, String.valueOf(score));
     }

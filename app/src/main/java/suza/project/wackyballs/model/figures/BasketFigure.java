@@ -17,21 +17,41 @@ import suza.project.wackyballs.model.properties.FigureType;
 import suza.project.wackyballs.model.properties.MySpeed;
 
 /**
+ * Figure representing a basket in basket ball game.
+ *
  * Created by lmark on 13/09/2017.
  */
 
 public class BasketFigure extends AbstractFigure {
 
     public static final String TAG = BasketFigure.class.getSimpleName();
-    public static final int BALL_SCORE = 10;
+
+    public static final int GOOD_BALL_SCORE = 10;
+    public static final int BAD_BALL_SCORE = -5;
+
     private static final int OFFSET = 20;
 
     private GamePanel panel;
     private BasketBallContainer figureContainer;
 
+    /**
+     * List containing all figures found in the basket.
+     */
     private List<AbstractFigure> basketList = new ArrayList<>();
-    private FigureAdapter leftEdge;
-    private FigureAdapter rightEdge;
+
+    /**
+     * Figure representing top left edge of the basket.
+     */
+    private StaticFigure leftEdge;
+
+    /**
+     * Figure representing top right edge of the basket.
+     */
+    private StaticFigure rightEdge;
+
+    /**
+     * Time difference used to give basket speed.
+     */
     private long dt;
     private long tOld;
 
@@ -39,7 +59,7 @@ public class BasketFigure extends AbstractFigure {
         super(BitmapFactory.decodeResource(gamePanel.getResources(), R.drawable.basket),
                 0, 0);
 
-        // Get navigation bar height in order to place the basket properly
+        // Get navigation bar height in order to place the basket properly on screen
         Resources resources = gamePanel.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         int navBarHeight = 0;
@@ -55,12 +75,13 @@ public class BasketFigure extends AbstractFigure {
         this.panel = gamePanel;
         this.figureContainer = figureContainter;
 
+        // Set basket figure type
         setState(FigureState.ALIVE);
         setType(FigureType.BASKET);
 
         // Define left edge
-        leftEdge = new FigureAdapter();
-        leftEdge.setMass(60);
+        leftEdge = new StaticFigure();
+        leftEdge.setMass(30);
         leftEdge.setX(getX() - getWidth() / 2);
         leftEdge.setY(getY() - getHeight() / 2 - 5);
         leftEdge.setRadius(5);
@@ -68,8 +89,8 @@ public class BasketFigure extends AbstractFigure {
         basketList.add(leftEdge);
 
         // Define right edge
-        rightEdge = new FigureAdapter();
-        rightEdge.setMass(60);
+        rightEdge = new StaticFigure();
+        rightEdge.setMass(30);
         rightEdge.setX(getX() + getWidth() / 2);
         rightEdge.setY(getY() - getHeight() / 2 - 5);
         rightEdge.setID(-2);
@@ -87,6 +108,7 @@ public class BasketFigure extends AbstractFigure {
     @Override
     public void handleActionMove(int eventX, int eventY) {
         if (isTouched()) {
+            double moveReductionFactor = 0.8;
 
             // If outside of range
             if (eventX > panel.getScreenWidth() - getWidth()/2 || eventX < getWidth()/2) {
@@ -102,21 +124,26 @@ public class BasketFigure extends AbstractFigure {
 
                 if (basketContains(figure)) {
                     // If figure is in the basket move it with the basket
-                    figure.setX(figure.getX() + (int) ((eventX - getX()) * 0.5));
+                    figure.setX(figure.getX() + (int) ((eventX - getX()) * moveReductionFactor));
                 } else {
                     synchronized (panel.getHolder()) {
+                        // resolve outside basket wall collision
                         Collision.resolveOutsideBasketBallCollision(this, figure);
+
+                        // resolve edge collisions
+                        Collision.resolveFigureCollision2(getLeftEdge(), figure);
+                        Collision.resolveFigureCollision2(getRightEdge(), figure);
                     }
                 }
             }
 
             // Update basket
-            setX(getX() + (int) ((eventX - getX()) * 0.5));
+            setX(getX() + (int) ((eventX - getX()) * moveReductionFactor));
 
-            int delta = (int) ((eventX - getX()) * 0.5);
+            int delta = (int) ((eventX - getX()) * moveReductionFactor);
             dt = System.currentTimeMillis() - tOld;
             tOld = System.currentTimeMillis();
-            MySpeed newSpeed = new MySpeed(delta, 0, (double)dt/100);
+            MySpeed newSpeed = new MySpeed(delta, 0, (double)dt/200);
 
             // Limit speed
             int maxSpeed = 10;
@@ -174,9 +201,9 @@ public class BasketFigure extends AbstractFigure {
             }
 
             if (basketList.get(i).getType() == FigureType.BAD_BALL) {
-                score --;
+                score += BAD_BALL_SCORE;
             } else if (basketList.get(i).getType() == FigureType.BALL){
-                score++;
+                score += GOOD_BALL_SCORE;
             }
 
             basketList.get(i).setState(FigureState.DEAD);
@@ -184,7 +211,7 @@ public class BasketFigure extends AbstractFigure {
         }
 
         livesChanged(life);
-        scoreChanged(score * BALL_SCORE);
+        scoreChanged(score);
     }
 
     @Override
@@ -262,11 +289,11 @@ public class BasketFigure extends AbstractFigure {
         return getBitmap().getWidth();
     }
 
-    public FigureAdapter getRightEdge() {
+    public StaticFigure getRightEdge() {
         return rightEdge;
     }
 
-    public FigureAdapter getLeftEdge() {
+    public StaticFigure getLeftEdge() {
         return leftEdge;
     }
 }

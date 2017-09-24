@@ -6,7 +6,6 @@ import java.util.List;
 
 import suza.project.wackyballs.R;
 import suza.project.wackyballs.game.GamePanel;
-import suza.project.wackyballs.model.components.AbstractAnimation;
 import suza.project.wackyballs.model.components.AbstractFigure;
 import suza.project.wackyballs.model.containers.BasketBallContainer;
 import suza.project.wackyballs.model.properties.Collision;
@@ -16,30 +15,31 @@ import suza.project.wackyballs.model.properties.MySpeed;
 import suza.project.wackyballs.util.Util;
 
 /**
- * Created by lmark on 13/09/2017.
+ * Figure reduces player score when deposited in basket.
+ *
+ * Created by lmark on 16/09/2017.
  */
 
-public class BasketBallFigure extends AbstractAnimation {
+public class BasketBallBadFigure extends AbstractFigure {
 
-    private GamePanel panel;
-    private BasketBallContainer figureContainer;
+    BasketBallContainer figureContainer;
+    GamePanel gamePanel;
 
-    public BasketBallFigure(GamePanel gamePanel, BasketBallContainer figureContainer) {
+    public BasketBallBadFigure(GamePanel gamePanel, BasketBallContainer figureContainer) {
         super(BitmapFactory.decodeResource(
                 gamePanel.getResources(),
-                R.drawable.face_animation),
-                Util.randomInteger(0, gamePanel.getScreenWidth()), -50,
-                10, 4);
+                R.drawable.bad_ball),
+                Util.randomInteger(0, gamePanel.getScreenWidth()), -50);
         super.setSpeed(new MySpeed(
                 Util.randomInteger(-10, 10),
                 Util.randomInteger(2, 5)
         ));
 
         this.figureContainer = figureContainer;
-        this.panel = gamePanel;
+        this.gamePanel = gamePanel;
         super.getSpeed().setGravity(true);
         setState(FigureState.ALIVE);
-        setType(FigureType.BALL);
+        setType(FigureType.BAD_BALL);
     }
 
     @Override
@@ -75,32 +75,11 @@ public class BasketBallFigure extends AbstractAnimation {
         getSpeed().update();
 
         // If out of the bottom of the screen set to DEAD
-        if (getY() > panel.getHeight() + 2*getRadius()) {
+        if (getY() > gamePanel.getHeight() + 2 * getRadius()) {
             setState(FigureState.DEAD);
 
             // Signal that the lives changed
             livesChanged(-1);
         }
     }
-
-    @Override
-    public void handleActionMove(int eventX, int eventY) {
-        // Unimplemented
-    }
-
-    @Override
-    public void handleActionDown(int eventX, int eventY) {
-        // Unimplemented
-    }
-
-    @Override
-    public void handleActionDoubleDown(int eventX, int eventY) {
-        // Unimplemented
-    }
-
-    @Override
-    public void handleActionUp(int eventX, int eventY) {
-        // Unimplemented
-    }
-
 }

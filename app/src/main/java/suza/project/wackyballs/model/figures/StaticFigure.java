@@ -12,17 +12,51 @@ import suza.project.wackyballs.model.properties.FigureType;
 import suza.project.wackyballs.model.properties.MySpeed;
 
 /**
+ * Figure adapter for AbstractFigure class. Leaves all abstract methods of inherited
+ * class unimplemented.
  *
  * Created by lmark on 14/09/2017.
  */
 
-public class FigureAdapter extends AbstractFigure {
+public class StaticFigure extends AbstractFigure {
 
-    public FigureAdapter() {
+    private MySpeed stateicSpeed = new MySpeed(0, 0) {
+        @Override
+        public void increaseSpeed(double xv, double yv) {
+            // Unimplemented
+        }
+
+        @Override
+        public void reduceSpeed(double xv, double yv) {
+            // unimplemented
+        }
+
+        @Override
+        public void setX(double x) {
+            // Unimplemented
+        }
+
+        @Override
+        public void setY(double y) {
+            // Unimplemented
+        }
+
+    };
+
+    public StaticFigure() {
         super(null, 0, 0);
         setSpeed(new MySpeed(0, 0));
+
+        // in order to avoid overriding methods and leaving them unimplemented
         setType(FigureType.STATIC_BALL);
         setState(FigureState.ALIVE);
+    }
+
+    @Override
+    public MySpeed getSpeed() {
+
+        // Always return zero speed
+        return stateicSpeed;
     }
 
     @Override
@@ -52,9 +86,7 @@ public class FigureAdapter extends AbstractFigure {
 
     @Override
     public void draw(Canvas canvas) {
-        //Paint p = new Paint();
-        //p.setColor(Color.YELLOW);
-        //canvas.drawCircle(getX(), getY(), getRadius(), p);
+        // Unimplemented
     }
 
     @Override

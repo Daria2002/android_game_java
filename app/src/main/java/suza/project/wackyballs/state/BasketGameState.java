@@ -12,8 +12,8 @@ import android.view.MotionEvent;
 import suza.project.wackyballs.R;
 import suza.project.wackyballs.game.GamePanel;
 import suza.project.wackyballs.model.containers.BasketBallContainer;
-import suza.project.wackyballs.model.figures.BadFigure;
-import suza.project.wackyballs.model.figures.BasketBallFigure;
+import suza.project.wackyballs.model.figures.BasketBallBadFigure;
+import suza.project.wackyballs.model.figures.BasketBallGoodFigure;
 import suza.project.wackyballs.model.figures.BasketFigure;
 import suza.project.wackyballs.model.figures.HeartFigure;
 import suza.project.wackyballs.model.properties.Collision;
@@ -48,9 +48,9 @@ public class BasketGameState implements IGameState {
      */
     private long lastClickTime = 0;
 
-    private int normalBallSpawnPeriod = 5000; //ms
+    private int normalBallSpawnPeriod = 2000; //ms
     private int lifeBallSpawnPeriod = 10000; // ms
-    private int badBallSpawnPeriod = 7000;
+    private int badBallSpawnPeriod = 5000;  // ms
 
     private long lastNormalSpawn;
     private long lastLifeSpawn;
@@ -128,9 +128,9 @@ public class BasketGameState implements IGameState {
         // Spawn a new good ball figure
         if (System.currentTimeMillis() - lastNormalSpawn >= normalBallSpawnPeriod) {
             lastNormalSpawn = System.currentTimeMillis();
-            normalBallSpawnPeriod = Util.randomInteger(2, 6) * 1000;
+            normalBallSpawnPeriod = Util.randomInteger(3, 5) * 1000;
 
-            BasketBallFigure newFigure = new BasketBallFigure(panel, figureContainer);
+            BasketBallGoodFigure newFigure = new BasketBallGoodFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
             figureContainer.addFigure(newFigure);
         }
@@ -138,9 +138,9 @@ public class BasketGameState implements IGameState {
         // Spawn a bad figure
         if (System.currentTimeMillis() - lastBadSpawn >= badBallSpawnPeriod) {
             lastBadSpawn = System.currentTimeMillis();
-            badBallSpawnPeriod = Util.randomInteger(4, 7) * 1000;
+            badBallSpawnPeriod = Util.randomInteger(7, 9) * 1000;
 
-            BadFigure newFigure = new BadFigure(panel, figureContainer);
+            BasketBallBadFigure newFigure = new BasketBallBadFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
             figureContainer.addFigure(newFigure);
         }
@@ -148,7 +148,7 @@ public class BasketGameState implements IGameState {
         // Spawn a new life figure
         if (System.currentTimeMillis() - lastLifeSpawn >= lifeBallSpawnPeriod) {
             lastLifeSpawn = System.currentTimeMillis();
-            lifeBallSpawnPeriod = Util.randomInteger(6, 10) * 1000;
+            lifeBallSpawnPeriod = Util.randomInteger(7, 12) * 1000;
 
             HeartFigure newFigure = new HeartFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);

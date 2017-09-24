@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,6 +39,7 @@ public class DatabaseRequest extends AsyncTask<String, Void, Map<String, Integer
     private final String URL_SELECT_ALL;
     private final String URL_INSERT_UPDATE;
 
+    private static final int CONNECTION_TIMEOUT = 10000;
     private static final String TAG = DatabaseRequest.class.getSimpleName();
 
     /**
@@ -101,6 +101,7 @@ public class DatabaseRequest extends AsyncTask<String, Void, Map<String, Integer
         return null;
     }
 
+
     @Override
     protected void onPostExecute(final Map<String, Integer> stringIntegerMap) {
         Log.d(TAG, "Task finished");
@@ -132,10 +133,6 @@ public class DatabaseRequest extends AsyncTask<String, Void, Map<String, Integer
         }
     }
 
-    public Exception getException() {
-        return e;
-    }
-
     /**
      * Handles SELECT_ALL request.
      *
@@ -148,6 +145,7 @@ public class DatabaseRequest extends AsyncTask<String, Void, Map<String, Integer
         URL url = new URL(URL_SELECT_ALL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
+        conn.setConnectTimeout(CONNECTION_TIMEOUT);
 
         BufferedReader reader = new BufferedReader(new
                 InputStreamReader(conn.getInputStream()));
@@ -189,6 +187,7 @@ public class DatabaseRequest extends AsyncTask<String, Void, Map<String, Integer
         // Open connection
         URL url = new URL(URL_INSERT_UPDATE);
         URLConnection conn = url.openConnection();
+        conn.setConnectTimeout(CONNECTION_TIMEOUT);
 
         // Write post parameters
         conn.setDoOutput(true);

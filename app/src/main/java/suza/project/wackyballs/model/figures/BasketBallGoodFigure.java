@@ -6,39 +6,42 @@ import java.util.List;
 
 import suza.project.wackyballs.R;
 import suza.project.wackyballs.game.GamePanel;
+import suza.project.wackyballs.model.components.AbstractAnimation;
 import suza.project.wackyballs.model.components.AbstractFigure;
 import suza.project.wackyballs.model.containers.BasketBallContainer;
 import suza.project.wackyballs.model.properties.Collision;
 import suza.project.wackyballs.model.properties.FigureState;
 import suza.project.wackyballs.model.properties.FigureType;
 import suza.project.wackyballs.model.properties.MySpeed;
-import suza.project.wackyballs.util.IGameInfoListener;
 import suza.project.wackyballs.util.Util;
 
 /**
- * Created by lmark on 16/09/2017.
+ * Figure increases player score when deposited in basket.
+ * 
+ * Created by lmark on 13/09/2017.
  */
 
-public class BadFigure extends AbstractFigure {
+public class BasketBallGoodFigure extends AbstractAnimation {
 
-    BasketBallContainer figureContainer;
-    GamePanel gamePanel;
+    private GamePanel panel;
+    private BasketBallContainer figureContainer;
 
-    public BadFigure(GamePanel gamePanel, BasketBallContainer figureContainer) {
+    public BasketBallGoodFigure(GamePanel gamePanel, BasketBallContainer figureContainer) {
         super(BitmapFactory.decodeResource(
                 gamePanel.getResources(),
-                R.drawable.bad_ball),
-                Util.randomInteger(0, gamePanel.getScreenWidth()), -50);
+                R.drawable.face_animation),
+                Util.randomInteger(0, gamePanel.getScreenWidth()), -50,
+                10, 4);
         super.setSpeed(new MySpeed(
                 Util.randomInteger(-10, 10),
                 Util.randomInteger(2, 5)
         ));
 
         this.figureContainer = figureContainer;
-        this.gamePanel = gamePanel;
+        this.panel = gamePanel;
         super.getSpeed().setGravity(true);
         setState(FigureState.ALIVE);
-        setType(FigureType.BAD_BALL);
+        setType(FigureType.BALL);
     }
 
     @Override
@@ -74,7 +77,7 @@ public class BadFigure extends AbstractFigure {
         getSpeed().update();
 
         // If out of the bottom of the screen set to DEAD
-        if (getY() > gamePanel.getHeight() + 2 * getRadius()) {
+        if (getY() > panel.getHeight() + 2*getRadius()) {
             setState(FigureState.DEAD);
 
             // Signal that the lives changed
@@ -82,22 +85,4 @@ public class BadFigure extends AbstractFigure {
         }
     }
 
-    @Override
-    public void handleActionDoubleDown(int eventX, int eventY) {
-
-    }
-
-    @Override
-    public void handleActionMove(int eventX, int eventY) {
-
-    }
-
-    @Override
-    public void handleActionDown(int eventX, int eventY) {
-
-    }
-
-    @Override
-    public void handleActionUp(int eventX, int eventY) {
-    }
 }

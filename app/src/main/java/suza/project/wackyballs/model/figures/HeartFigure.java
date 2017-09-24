@@ -15,6 +15,9 @@ import suza.project.wackyballs.model.properties.MySpeed;
 import suza.project.wackyballs.util.Util;
 
 /**
+ * Figure provides user 1 extra heart when deposited in the basket.
+ * Used in BasketBall game.
+ *
  * Created by lmark on 16/09/2017.
  */
 
@@ -76,25 +79,5 @@ public class HeartFigure extends AbstractFigure {
         if (getY() > gamePanel.getHeight() + 2*getRadius()) {
             setState(FigureState.DEAD);
         }
-    }
-
-    @Override
-    public void handleActionDoubleDown(int eventX, int eventY) {
-
-    }
-
-    @Override
-    public void handleActionMove(int eventX, int eventY) {
-
-    }
-
-    @Override
-    public void handleActionDown(int eventX, int eventY) {
-
-    }
-
-    @Override
-    public void handleActionUp(int eventX, int eventY) {
-
     }
 }

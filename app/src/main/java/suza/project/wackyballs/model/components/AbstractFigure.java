@@ -17,10 +17,12 @@ import suza.project.wackyballs.util.IGameInfoProvider;
  * This class represents a non-animated figure with some basic properties(speed, position,
  * image - represented as a Bitmap object, etc.) It can collide with walls.
  *
+ * Implements game information provider interface used for signaling game information changes.
+ *
  * Created by lmark on 03/08/2017.
  */
 
-public abstract class AbstractFigure implements IGameInfoProvider {
+public abstract class AbstractFigure implements IGameInfoProvider{
 
     /**
      * the actual bitmap
@@ -147,7 +149,9 @@ public abstract class AbstractFigure implements IGameInfoProvider {
      * @param eventX X coordinate.
      * @param eventY Y coordinate.
      */
-    public abstract void handleActionDoubleDown(int eventX, int eventY);
+    public void handleActionDoubleDown(int eventX, int eventY) {
+        //Unimplemented
+    }
 
     /**
      * Callback for move action.
@@ -155,7 +159,9 @@ public abstract class AbstractFigure implements IGameInfoProvider {
      * @param eventX X coordinate.
      * @param eventY Y coordinate.
      */
-    public abstract void handleActionMove(int eventX, int eventY);
+    public void handleActionMove(int eventX, int eventY) {
+        //Unimplemented
+    }
 
     /**
      * Callback for down click action.
@@ -163,14 +169,19 @@ public abstract class AbstractFigure implements IGameInfoProvider {
      * @param eventX X coordinate.
      * @param eventY Y coordinate.
      */
-    public abstract void handleActionDown(int eventX, int eventY);
- /**
+    public void handleActionDown(int eventX, int eventY) {
+        // Unimplemented
+    }
+
+    /**
      * Callback for up click action.
      *
      * @param eventX X coordinate.
      * @param eventY Y coordinate.
      */
-    public abstract void handleActionUp(int eventX, int eventY);
+    public void handleActionUp(int eventX, int eventY) {
+        // Unimplemented
+    }
 
     @Override
     public void addGameInfoListener(IGameInfoListener listener) {
