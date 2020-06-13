@@ -68,7 +68,7 @@ public class MainThread extends Thread {
     /**
      * Last N fps values.
      */
-    private double 	fpsStore[];
+    private double[] fpsStore;
     /**
      * Number of times stat has been read.
      */

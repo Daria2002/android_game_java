@@ -6,7 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.util.Log;
+import java.io.File;
+import java.io.IOException;
 import android.view.MotionEvent;
 
 import suza.project.wackyballs.R;
@@ -104,6 +109,7 @@ public class BasketGameState implements IGameState {
         // Draw background
         p.setColor(Color.CYAN);
         canvas.drawRect(0, 0, panel.getWidth(), panel.getHeight(), p);
+
 
         // Draw container objects
         figureContainer.draw(canvas);

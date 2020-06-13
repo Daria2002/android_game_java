@@ -221,16 +221,11 @@ public class Collision {
 
         // If basket does not contain the ball check for outside collision
         if (!((BasketFigure)basket).basketContains(ball)) {
-            if (resolveOutsideBasketBallCollision(basket, ball)) {
-                return true;
-            }
+            return resolveOutsideBasketBallCollision(basket, ball);
         } else {
-            if(resolveInsideBasketBallCollision(basket, ball)) {
-                return true;
-            }
+            return resolveInsideBasketBallCollision(basket, ball);
         }
 
-        return false;
     }
 
     /**
@@ -273,12 +268,9 @@ public class Collision {
         }
 
         // If the ball is on the outside but there is no collision
-        if (ballLeft > basket.getX() + basket.getWidth()/2 + COLLISION_OFFSET ||
-                ballRight <  basket.getX() - basket.getWidth()/2 - COLLISION_OFFSET) {
-            return true;
-        }
+        return ballLeft > basket.getX() + basket.getWidth() / 2 + COLLISION_OFFSET ||
+                ballRight < basket.getX() - basket.getWidth() / 2 - COLLISION_OFFSET;
 
-        return false;
     }
 
     /**

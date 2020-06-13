@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.util.Log;import android.view.MotionEvent;
 
 import suza.project.wackyballs.game.GamePanel;
+import suza.project.wackyballs.model.containers.FigureContainer;
 import suza.project.wackyballs.model.figures.TestFigure;
 import suza.project.wackyballs.model.containers.GeneralFigureContainer;
 import suza.project.wackyballs.model.properties.Collision;
@@ -23,7 +24,7 @@ public class TestGameState implements IGameState{
     public TestGameState(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         figureContainer = new GeneralFigureContainer(gamePanel);
-        figureContainer.figureID = 0;
+        FigureContainer.figureID = 0;
 
         for (int i = 0; i < 10; i++) {
             figureContainer.addFigure(new TestFigure(gamePanel));
