@@ -1,4 +1,4 @@
-package suza.project.wackyballs;
+package suza.project.crazyballs;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("suza.project.wackyballs", appContext.getPackageName());
+        assertEquals("suza.project.crazyballs", appContext.getPackageName());
     }
 }

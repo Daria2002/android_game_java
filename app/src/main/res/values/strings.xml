@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wacky Balls</string>
+    <string name="app_name">Crazy Balls</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="url_select_all">http://lmarkovic1994.000webhostapp.com/php/select_all_pdo.php</string>
     <string name="url_insert_update">http://lmarkovic1994.000webhostapp.com/php/update_insert.php</string>

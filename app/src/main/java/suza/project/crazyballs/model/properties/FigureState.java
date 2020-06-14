@@ -1,4 +1,4 @@
-package suza.project.wackyballs.model.properties;
+package suza.project.crazyballs.model.properties;
 
 /**
  * Figure states.

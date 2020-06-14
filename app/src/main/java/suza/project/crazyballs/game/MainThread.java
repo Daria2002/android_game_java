@@ -1,4 +1,4 @@
-package suza.project.wackyballs.game;
+package suza.project.crazyballs.game;
 
 import android.graphics.Canvas;
 import android.util.Log;

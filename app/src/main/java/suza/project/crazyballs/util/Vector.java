@@ -1,4 +1,4 @@
-package suza.project.wackyballs.util;
+package suza.project.crazyballs.util;
 
 /**
  * Class representing a vector object.

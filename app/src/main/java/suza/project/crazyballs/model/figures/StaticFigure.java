@@ -1,15 +1,13 @@
-package suza.project.wackyballs.model.figures;
+package suza.project.crazyballs.model.figures;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
 import java.util.List;
 
-import suza.project.wackyballs.model.components.AbstractFigure;
-import suza.project.wackyballs.model.properties.FigureState;
-import suza.project.wackyballs.model.properties.FigureType;
-import suza.project.wackyballs.model.properties.MySpeed;
+import suza.project.crazyballs.model.components.AbstractFigure;
+import suza.project.crazyballs.model.properties.FigureState;
+import suza.project.crazyballs.model.properties.FigureType;
+import suza.project.crazyballs.model.properties.MySpeed;
 
 /**
  * Figure adapter for AbstractFigure class. Leaves all abstract methods of inherited

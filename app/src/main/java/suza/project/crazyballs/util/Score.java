@@ -1,4 +1,4 @@
-package suza.project.wackyballs.util;
+package suza.project.crazyballs.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Score helper class.

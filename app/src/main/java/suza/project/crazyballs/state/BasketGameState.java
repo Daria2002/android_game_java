@@ -1,4 +1,4 @@
-package suza.project.wackyballs.state;
+package suza.project.crazyballs.state;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,24 +6,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.util.Log;
-import java.io.File;
-import java.io.IOException;
 import android.view.MotionEvent;
 
-import suza.project.wackyballs.R;
-import suza.project.wackyballs.game.GamePanel;
-import suza.project.wackyballs.model.containers.BasketBallContainer;
-import suza.project.wackyballs.model.figures.BasketBallBadFigure;
-import suza.project.wackyballs.model.figures.BasketBallGoodFigure;
-import suza.project.wackyballs.model.figures.BasketFigure;
-import suza.project.wackyballs.model.figures.HeartFigure;
-import suza.project.wackyballs.model.properties.Collision;
-import suza.project.wackyballs.util.IGameInfoListener;
-import suza.project.wackyballs.util.Util;
+import suza.project.crazyballs.R;
+import suza.project.crazyballs.game.GamePanel;
+import suza.project.crazyballs.model.containers.BasketBallContainer;
+import suza.project.crazyballs.model.figures.BasketBallBadFigure;
+import suza.project.crazyballs.model.figures.BasketBallGoodFigure;
+import suza.project.crazyballs.model.figures.BasketFigure;
+import suza.project.crazyballs.model.figures.HeartFigure;
+import suza.project.crazyballs.model.properties.Collision;
+import suza.project.crazyballs.util.IGameInfoListener;
+import suza.project.crazyballs.util.Util;
 
 /**
  * Catch balls in basket. Double click basket to store balls.

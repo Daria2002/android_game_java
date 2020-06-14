@@ -1,4 +1,4 @@
-package suza.project.wackyballs.model.components;
+package suza.project.crazyballs.model.components;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

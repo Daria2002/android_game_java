@@ -1,4 +1,4 @@
-package suza.project.wackyballs;
+package suza.project.crazyballs;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btnPlay)
     public void playButtonAction(View view) {
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
-        intent.putExtra("state", "BasketBall");
         startActivityForResult(intent, MainActivity.REQUST_GET_SCORE);
     }
 

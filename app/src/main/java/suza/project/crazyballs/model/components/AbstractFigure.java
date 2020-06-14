@@ -1,4 +1,4 @@
-package suza.project.wackyballs.model.components;
+package suza.project.crazyballs.model.components;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,11 +7,11 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import suza.project.wackyballs.model.properties.FigureState;
-import suza.project.wackyballs.model.properties.FigureType;
-import suza.project.wackyballs.model.properties.MySpeed;
-import suza.project.wackyballs.util.IGameInfoListener;
-import suza.project.wackyballs.util.IGameInfoProvider;
+import suza.project.crazyballs.model.properties.FigureState;
+import suza.project.crazyballs.model.properties.FigureType;
+import suza.project.crazyballs.model.properties.MySpeed;
+import suza.project.crazyballs.util.IGameInfoListener;
+import suza.project.crazyballs.util.IGameInfoProvider;
 
 /**
  * This class represents a non-animated figure with some basic properties(speed, position,

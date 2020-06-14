@@ -1,4 +1,4 @@
-package suza.project.wackyballs.util;
+package suza.project.crazyballs.util;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import suza.project.wackyballs.R;
+import suza.project.crazyballs.R;
 
 /**
  * Background worker used for sending database requests.

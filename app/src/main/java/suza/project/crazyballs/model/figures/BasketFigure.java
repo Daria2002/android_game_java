@@ -1,4 +1,4 @@
-package suza.project.wackyballs.model.figures;
+package suza.project.crazyballs.model.figures;
 
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
@@ -7,14 +7,14 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import suza.project.wackyballs.R;
-import suza.project.wackyballs.game.GamePanel;
-import suza.project.wackyballs.model.components.AbstractFigure;
-import suza.project.wackyballs.model.containers.BasketBallContainer;
-import suza.project.wackyballs.model.properties.Collision;
-import suza.project.wackyballs.model.properties.FigureState;
-import suza.project.wackyballs.model.properties.FigureType;
-import suza.project.wackyballs.model.properties.MySpeed;
+import suza.project.crazyballs.R;
+import suza.project.crazyballs.game.GamePanel;
+import suza.project.crazyballs.model.components.AbstractFigure;
+import suza.project.crazyballs.model.containers.BasketBallContainer;
+import suza.project.crazyballs.model.properties.Collision;
+import suza.project.crazyballs.model.properties.FigureState;
+import suza.project.crazyballs.model.properties.FigureType;
+import suza.project.crazyballs.model.properties.MySpeed;
 
 /**
  * Figure representing a basket in basket ball game.

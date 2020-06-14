@@ -1,12 +1,12 @@
-package suza.project.wackyballs.model.containers;
+package suza.project.crazyballs.model.containers;
 
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import suza.project.wackyballs.game.GamePanel;
-import suza.project.wackyballs.model.components.AbstractFigure;
+import suza.project.crazyballs.game.GamePanel;
+import suza.project.crazyballs.model.components.AbstractFigure;
 
 /**
  * A generic figure container used for storing, updating and drawing figures.

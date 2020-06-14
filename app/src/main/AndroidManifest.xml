@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="suza.project.wackyballs">
+    package="suza.project.crazyballs">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,16 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="suza.project.crazyballs.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameActivity" />
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".ScoreActivity"></activity>
+        <activity android:name="suza.project.crazyballs.GameActivity" />
+        <activity android:name="suza.project.crazyballs.ResultActivity" />
+        <activity android:name="suza.project.crazyballs.ScoreActivity"></activity>
     </application>
 
 </manifest>

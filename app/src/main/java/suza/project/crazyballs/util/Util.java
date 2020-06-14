@@ -1,4 +1,4 @@
-package suza.project.wackyballs.util;
+package suza.project.crazyballs.util;
 
 
 import java.util.Random;

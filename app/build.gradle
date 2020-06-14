@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "suza.project.wackyballs"
+        applicationId "suza.project.crazyballs"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1

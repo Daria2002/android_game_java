@@ -1,4 +1,4 @@
-package suza.project.wackyballs.state;
+package suza.project.crazyballs.state;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;

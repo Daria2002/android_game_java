@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="suza.project.wackyballs.MainActivity">
+    tools:context="suza.project.crazyballs.MainActivity">
 
     <TextView
         android:id="@+id/tvGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wacky Balls"
+        android:text="Crazy Balls"
         android:layout_centerHorizontal="true"
         android:textSize="50dp"
         android:textStyle="bold"
@@ -52,7 +52,7 @@
 
     <Button
         android:id="@+id/btnHighscore"
-        android:text="Highscores"
+        android:text="High scores"
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

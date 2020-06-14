@@ -1,27 +1,17 @@
-package suza.project.wackyballs;
+package suza.project.crazyballs;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.os.Build;
-import android.os.Looper;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 
-import suza.project.wackyballs.game.GamePanel;
-import suza.project.wackyballs.state.BasketGameState;
-import suza.project.wackyballs.state.GravityGameState;
-import suza.project.wackyballs.state.TestGameState;
-import suza.project.wackyballs.util.IGameFinishedListener;
+import suza.project.crazyballs.game.GamePanel;
+import suza.project.crazyballs.state.BasketGameState;
+import suza.project.crazyballs.util.IGameFinishedListener;
 
 /**
  * This class represents the main game activity. It sets the game panel
@@ -67,24 +57,9 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        String state = getIntent().getStringExtra("state");
         gamePanel = new GamePanel(this);
         gamePanel.setGameFinishedListener(finishedListener);
-
-        // Set correct game state
-        switch (state) {
-            case "BouncyBall":
-                gamePanel.setGameState(new TestGameState(gamePanel));
-                break;
-
-            case "GravityBall":
-                gamePanel.setGameState(new GravityGameState(gamePanel));
-                break;
-
-            case "BasketBall":
-                gamePanel.setGameState(new BasketGameState(gamePanel));
-                break;
-        }
+        gamePanel.setGameState(new BasketGameState(gamePanel));
 
         // Set Game panel as the view
         setContentView(gamePanel);

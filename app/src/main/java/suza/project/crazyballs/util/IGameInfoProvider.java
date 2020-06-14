@@ -1,4 +1,4 @@
-package suza.project.wackyballs.util;
+package suza.project.crazyballs.util;
 
 /**
  * Provides an interface for managing game information through information listeners.

@@ -1,13 +1,10 @@
-package suza.project.wackyballs.game;
+package suza.project.crazyballs.game;
 
 import android.content.Context;
-import android.content.ReceiverCallNotAllowedException;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -15,8 +12,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-import suza.project.wackyballs.state.IGameState;
-import suza.project.wackyballs.util.IGameFinishedListener;
+import suza.project.crazyballs.state.IGameState;
+import suza.project.crazyballs.util.IGameFinishedListener;
 
 
 /**

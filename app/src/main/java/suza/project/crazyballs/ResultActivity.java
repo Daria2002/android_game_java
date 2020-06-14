@@ -1,4 +1,4 @@
-package suza.project.wackyballs;
+package suza.project.crazyballs;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,8 +24,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import suza.project.wackyballs.util.DatabaseRequest;
-import suza.project.wackyballs.util.Score;
+import suza.project.crazyballs.util.DatabaseRequest;
+import suza.project.crazyballs.util.Score;
 
 public class ResultActivity extends AppCompatActivity {
 

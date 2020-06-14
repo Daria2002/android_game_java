@@ -1,12 +1,12 @@
-package suza.project.wackyballs.model.containers;
+package suza.project.crazyballs.model.containers;
 
 import android.graphics.Canvas;
 import android.util.Log;
 
-import suza.project.wackyballs.game.GamePanel;
-import suza.project.wackyballs.model.components.AbstractFigure;
-import suza.project.wackyballs.model.properties.FigureState;
-import suza.project.wackyballs.model.properties.FigureType;
+import suza.project.crazyballs.game.GamePanel;
+import suza.project.crazyballs.model.components.AbstractFigure;
+import suza.project.crazyballs.model.properties.FigureState;
+import suza.project.crazyballs.model.properties.FigureType;
 
 
 /**

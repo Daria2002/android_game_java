@@ -1,4 +1,4 @@
-package suza.project.wackyballs;
+package suza.project.crazyballs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,9 +1,9 @@
-package suza.project.wackyballs.model.properties;
+package suza.project.crazyballs.model.properties;
 
 import android.util.Log;
 
-import suza.project.wackyballs.model.components.AbstractFigure;
-import suza.project.wackyballs.model.figures.BasketFigure;
+import suza.project.crazyballs.model.components.AbstractFigure;
+import suza.project.crazyballs.model.figures.BasketFigure;
 
 /**
  * This class is used for resolving collisions between objects.

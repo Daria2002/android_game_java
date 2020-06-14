@@ -1,6 +1,6 @@
-package suza.project.wackyballs.model.properties;
+package suza.project.crazyballs.model.properties;
 
-import suza.project.wackyballs.util.Vector;
+import suza.project.crazyballs.util.Vector;
 
 /**
  * This class represents a simple 2-dimensional speed vector.
