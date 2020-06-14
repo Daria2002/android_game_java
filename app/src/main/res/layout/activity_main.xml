@@ -35,14 +35,6 @@
         android:paddingLeft="60dp"
         />
 
-    <Spinner
-        android:id="@+id/state_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnPlay"
-        android:layout_centerInParent="true">
-    </Spinner>
-
     <Button
         android:id="@+id/btnExit"
         android:text="EXIT"

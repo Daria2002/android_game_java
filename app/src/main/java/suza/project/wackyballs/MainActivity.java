@@ -27,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btnExit)
     Button btnExit;
 
-    @BindView(R.id.state_spinner)
-    Spinner stateSpinner;
-
     @BindView(R.id.btnHighscore)
     Button btnHighscore;
 
@@ -42,18 +39,8 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // Configure spinner options
-
-        String[] stateString = new String[] {
-                "BasketBall", "BouncyBall", "GravityBall"
-        };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                R.layout.support_simple_spinner_dropdown_item, stateString);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        stateSpinner.setAdapter(adapter);
     }
 
     @Override
@@ -71,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btnPlay)
     public void playButtonAction(View view) {
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
-        intent.putExtra("state", (String)stateSpinner.getSelectedItem());
+        intent.putExtra("state", "BasketBall");
         startActivityForResult(intent, MainActivity.REQUST_GET_SCORE);
     }
 
