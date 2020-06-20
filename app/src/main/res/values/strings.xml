@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Crazy Balls</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="url_select_all">http://crazyballs.000webhostapp.com/select_all.php</string>
-    <string name="url_insert_update">http://crazyballs.000webhostapp.com/update_insert.php</string>
+    <string name="url_select_all">https://crazyballs.000webhostapp.com/select_all.php</string>
+    <string name="url_insert_update">https://crazyballs.000webhostapp.com/update_insert.php</string>
     <string name="url_get"></string>
 </resources>

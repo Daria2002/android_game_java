@@ -153,8 +153,9 @@ public class DatabaseRequest extends AsyncTask<String, Void, Map<String, Integer
         // Read response
         StringBuilder responseStrBuilder = new StringBuilder();
         String inputStr;
-        while ((inputStr = reader.readLine()) != null)
+        while ((inputStr = reader.readLine()) != null) {
             responseStrBuilder.append(inputStr);
+        }
 
         // Parse Json response
         JSONArray jsonArray = new JSONArray(responseStrBuilder.toString());
