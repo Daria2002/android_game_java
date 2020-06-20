@@ -11,13 +11,16 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO crazy_balls_scores (name, score)
-VALUES ('Jack', 8)";
-
-if ($conn->query($sql) === TRUE) {
-  echo "New record created successfully";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // collect value of input field
+  $name = $_POST["name"];
+  $score = $_POST["score"];
+  $stmt = $conn->prepare("INSERT INTO crazy_balls_scores (name, score) VALUES (?, ?)");
+  $stmt->bind_param("ss",$name, $score);
+  $stmt->execute();
 } else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "No post";
 }
+
 $conn->close();
 ?>
