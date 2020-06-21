@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name="suza.project.crazyballs.GameActivity" />
+        <activity android:name="suza.project.crazyballs.HowToPlayActivity" />
         <activity android:name="suza.project.crazyballs.ResultActivity" />
         <activity android:name="suza.project.crazyballs.ScoreActivity"></activity>
     </application>

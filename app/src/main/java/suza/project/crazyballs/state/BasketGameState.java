@@ -105,7 +105,6 @@ public class BasketGameState implements IGameState {
         p.setColor(Color.CYAN);
         canvas.drawRect(0, 0, panel.getWidth(), panel.getHeight(), p);
 
-
         // Draw container objects
         figureContainer.draw(canvas);
 

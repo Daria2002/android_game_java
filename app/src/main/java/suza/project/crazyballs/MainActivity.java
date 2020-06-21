@@ -59,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, MainActivity.REQUST_GET_SCORE);
     }
 
+
+    /**
+     * Action performed when how to play button is pressed.
+     *
+     * @param view View.
+     */
+    @OnClick(R.id.btnHowToPlay)
+    public void howToPlayButtonAction(View view) {
+        Intent intent = new Intent(MainActivity.this, HowToPlayActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * Action performed when exit button is pressed.
      *
