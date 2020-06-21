@@ -2,6 +2,7 @@ package suza.project.crazyballs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HowToPlayActivity extends AppCompatActivity {
 
@@ -41,4 +43,15 @@ public class HowToPlayActivity extends AppCompatActivity {
         text.setTextSize(20);
         text.setText("How to play Crazy Balls?\nCatch good balls to score 10 points.\nCatch bad balls but lose 5 points.\n");
     }
+
+    /**
+     * Exit button action.
+     *
+     * @param view View
+     */
+    @OnClick(R.id.mainMenuButton)
+    public void exitButtonAction(View view) {
+        HowToPlayActivity.this.finish();
+    }
+
 }
