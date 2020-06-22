@@ -6,6 +6,7 @@ import java.util.List;
 
 import suza.project.crazyballs.R;
 import suza.project.crazyballs.game.GamePanel;
+import suza.project.crazyballs.model.components.AbstractAnimation;
 import suza.project.crazyballs.model.components.AbstractFigure;
 import suza.project.crazyballs.model.containers.BasketBallContainer;
 import suza.project.crazyballs.model.properties.Collision;
@@ -20,7 +21,7 @@ import suza.project.crazyballs.util.Util;
  * Created by lmark on 16/09/2017.
  */
 
-public class BasketBallBadFigure extends AbstractFigure {
+public class BasketBallBadFigure extends AbstractAnimation {
 
     BasketBallContainer figureContainer;
     GamePanel gamePanel;
@@ -28,8 +29,9 @@ public class BasketBallBadFigure extends AbstractFigure {
     public BasketBallBadFigure(GamePanel gamePanel, BasketBallContainer figureContainer) {
         super(BitmapFactory.decodeResource(
                 gamePanel.getResources(),
-                R.drawable.bad_ball),
-                Util.randomInteger(0, gamePanel.getScreenWidth()), -50);
+                R.drawable.bad_face_animation),
+                Util.randomInteger(0, gamePanel.getScreenWidth()), -50,
+                10, 4);
         super.setSpeed(new MySpeed(
                 Util.randomInteger(-10, 10),
                 Util.randomInteger(2, 5)
