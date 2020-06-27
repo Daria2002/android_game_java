@@ -69,24 +69,22 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 builder = new AlertDialog.Builder(GameActivity.this);
             }
+            final String[] items = {"Quit", "Resume"};
             // Configure builder
-            builder.setTitle("GAME PAUSED")
-                    .setPositiveButton("Quit", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(GameActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            GameActivity.this.startActivity(intent);
-                            GameActivity.this.finish();
-                        }
-                    })
-                    .setNegativeButton("Resume", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            gamePanel.unpause();
-                        }
-                    })
-                    .setCancelable(false);
-
+            builder.setTitle("GAME PAUSED");
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(items[which] == "Quit") {
+                        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        GameActivity.this.startActivity(intent);
+                        GameActivity.this.finish();
+                    } else {
+                        gamePanel.unpause();
+                    }
+                }
+            });
             // Create and show dialog
             final AlertDialog dialog = builder.create();
             dialog.show();
