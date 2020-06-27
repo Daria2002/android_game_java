@@ -234,27 +234,4 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public boolean isFinished() {
         return finished;
     }
-
-    /**
-     * Signals that the game is finished.
-     *
-     * @param score Current game score.
-     */
-    public void finish(int score) {
-        Log.d(TAG, "Finishing the game...");
-
-        if (gameFinishedListener != null) {
-            gameFinishedListener.gameFinished(score);
-        }
-
-        finished = true;
-    }
-
-    /**
-     * @param listener New listener checking for game finish.
-     */
-    public void setGameFinishedListener(IGameFinishedListener listener) {
-        this.gameFinishedListener = listener;
-    }
-
 }

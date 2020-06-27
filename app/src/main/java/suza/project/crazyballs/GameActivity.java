@@ -1,17 +1,24 @@
 package suza.project.crazyballs;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import suza.project.crazyballs.game.GamePanel;
 import suza.project.crazyballs.state.BasketGameState;
 import suza.project.crazyballs.util.IGameFinishedListener;
+import suza.project.crazyballs.util.IGamePausedListener;
 
 /**
  * This class represents the main game activity. It sets the game panel
@@ -34,15 +41,51 @@ public class GameActivity extends AppCompatActivity {
             // Game is finished, do all the final things here
             Log.d(TAG, "Listener - Finishing the activity.");
 
-            //GameActivity.this.setResult(Activity.RESULT_OK, new Intent().putExtra(SCORE_KEY, score));
-            //GameActivity.this.finish();
-
             // Send score
             Intent intent = new Intent(GameActivity.this, ResultActivity.class);
             intent.putExtra(GameActivity.SCORE_KEY, score);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             GameActivity.this.startActivity(intent);
             GameActivity.this.finish();
+        }
+    };
+
+    /**
+     * Game paused listener.
+     */
+    private IGamePausedListener pauseListener = new IGamePausedListener() {
+
+        @Override
+        public void gamePaused() {
+            // Game is paused, display dialog
+            Log.d(TAG, "Listener - Pausing the activity.");
+            // Make finishing alert dialog
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(GameActivity.this,
+                        android.R.style.Theme_DeviceDefault_Dialog);
+            } else {
+                builder = new AlertDialog.Builder(GameActivity.this);
+            }
+            // Configure builder
+            builder.setTitle("GAME PAUSED")
+                    .setPositiveButton("Quit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing...
+                        }
+                    })
+                    .setNegativeButton("Resume", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Main menu click
+                            GameActivity.this.finish();
+                        }
+                    })
+                    .setCancelable(false);
+
+            // Create and show dialog
+            final AlertDialog dialog = builder.create();
+            dialog.show();
         }
     };
 
@@ -58,8 +101,10 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         gamePanel = new GamePanel(this);
-        gamePanel.setGameFinishedListener(finishedListener);
-        gamePanel.setGameState(new BasketGameState(gamePanel));
+        BasketGameState basketGameState = new BasketGameState(gamePanel);
+        basketGameState.setGamePausedListener(pauseListener);
+        basketGameState.setGameFinishedListener(finishedListener);
+        gamePanel.setGameState(basketGameState);
 
         // Set Game panel as the view
         setContentView(gamePanel);

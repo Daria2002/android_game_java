@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import suza.project.crazyballs.GameActivity;
 import suza.project.crazyballs.R;
 import suza.project.crazyballs.game.GamePanel;
 import suza.project.crazyballs.model.containers.BasketBallContainer;
@@ -17,7 +18,9 @@ import suza.project.crazyballs.model.figures.BasketBallGoodFigure;
 import suza.project.crazyballs.model.figures.BasketFigure;
 import suza.project.crazyballs.model.figures.HeartFigure;
 import suza.project.crazyballs.model.properties.Collision;
+import suza.project.crazyballs.util.IGameFinishedListener;
 import suza.project.crazyballs.util.IGameInfoListener;
+import suza.project.crazyballs.util.IGamePausedListener;
 import suza.project.crazyballs.util.Util;
 
 /**
@@ -57,9 +60,19 @@ public class BasketGameState implements IGameState {
     private long lastBadSpawn;
 
     /**
+     * Pause and finish listener
+     */
+    IGamePausedListener pauseListener;
+    IGameFinishedListener finishedListener;
+
+    /**
      * Heart image used for counting lives.
      */
     Bitmap lifeHeart;
+    /**
+     * Pause image used for pause button
+     */
+    Bitmap pause;
 
     private GamePanel panel;
     private BasketBallContainer figureContainer;
@@ -97,6 +110,7 @@ public class BasketGameState implements IGameState {
         lastLifeSpawn = System.currentTimeMillis();
         lastBadSpawn = System.currentTimeMillis();
         lifeHeart = BitmapFactory.decodeResource(panel.getResources(), R.drawable.heart);
+        pause = BitmapFactory.decodeResource(panel.getResources(), R.drawable.pause);
     }
 
     @Override
@@ -119,6 +133,9 @@ public class BasketGameState implements IGameState {
         String stringScore = String.format("SCORE: %d", score);
         p.setTextSize(100);
         canvas.drawText(stringScore, 5, lifeHeart.getHeight()*2, p);
+
+        // Draw pause symbol
+        canvas.drawBitmap(pause, panel.getWidth() - pause.getWidth(), 0, p);
     }
 
     @Override
@@ -157,8 +174,17 @@ public class BasketGameState implements IGameState {
 
         // If player lost all lives
         if (lives <= 0) {
-            panel.finish(score);
+            finishedListener.gameFinished(score);
         }
+    }
+
+    private  boolean pauseClicked(float x, float y) {
+        if(x >= panel.getWidth() - pause.getWidth() && x <= panel.getWidth() &&
+           y >= 0 && y <= pause.getHeight()) {
+            Log.d(TAG, "Pause clicked.");
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -177,6 +203,9 @@ public class BasketGameState implements IGameState {
                     // Single click detected
                     Log.d(TAG, "Single click detected");
                     figureContainer.handleActionDown((int) event.getX(), (int) event.getY());
+                    if(pauseClicked(event.getX(), event.getY())) {
+                        pauseListener.gamePaused();
+                    }
                 }
                 lastClickTime = clickTime;
             }
@@ -195,4 +224,11 @@ public class BasketGameState implements IGameState {
         return true;
     }
 
+    public void setGamePausedListener(IGamePausedListener pauseListener) {
+        pauseListener = pauseListener;
+    }
+
+    public void setGameFinishedListener(IGameFinishedListener finishedListener) {
+        finishedListener = finishedListener;
+    }
 }
