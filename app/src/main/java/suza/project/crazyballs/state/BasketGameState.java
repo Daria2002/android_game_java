@@ -224,11 +224,11 @@ public class BasketGameState implements IGameState {
         return true;
     }
 
-    public void setGamePausedListener(IGamePausedListener pauseListener) {
-        pauseListener = pauseListener;
+    public void setGamePausedListener(IGamePausedListener pl) {
+        pauseListener = pl;
     }
 
-    public void setGameFinishedListener(IGameFinishedListener finishedListener) {
-        finishedListener = finishedListener;
+    public void setGameFinishedListener(IGameFinishedListener fl) {
+        finishedListener = fl;
     }
 }
