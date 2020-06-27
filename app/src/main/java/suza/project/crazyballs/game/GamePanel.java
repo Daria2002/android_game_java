@@ -58,6 +58,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     private boolean finished = false;
 
+    /**
+     *  Check if game is paused.
+     */
+    private boolean paused = false;
+
     IGameFinishedListener gameFinishedListener;
 
     /**
@@ -233,5 +238,36 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     public boolean isFinished() {
         return finished;
+    }
+
+    /**
+     * @return True if game is paused otherwise false.
+     */
+    public boolean isPaused() {
+        return paused;
+    }
+
+    /**
+     * Signals that the game is finished.
+     */
+    public void finish(int score) {
+        Log.d(TAG, "Finishing the game...");
+        finished = true;
+    }
+
+    /**
+     * Signals that the game is paused.
+     */
+    public void pause() {
+        Log.d(TAG, "Pausing the game...");
+        paused = true;
+    }
+
+    /**
+     * Signals that the game is paused.
+     */
+    public void unpause() {
+        Log.d(TAG, "Pausing the game...");
+        paused = false;
     }
 }

@@ -47,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             GameActivity.this.startActivity(intent);
             GameActivity.this.finish();
+            gamePanel.finish(score);
         }
     };
 
@@ -59,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
         public void gamePaused() {
             // Game is paused, display dialog
             Log.d(TAG, "Listener - Pausing the activity.");
+            gamePanel.pause();
             // Make finishing alert dialog
             AlertDialog.Builder builder;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -72,13 +74,15 @@ public class GameActivity extends AppCompatActivity {
                     .setPositiveButton("Quit", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // Do nothing...
+                            Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            GameActivity.this.startActivity(intent);
+                            GameActivity.this.finish();
                         }
                     })
                     .setNegativeButton("Resume", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // Main menu click
-                            GameActivity.this.finish();
+                            gamePanel.unpause();
                         }
                     })
                     .setCancelable(false);

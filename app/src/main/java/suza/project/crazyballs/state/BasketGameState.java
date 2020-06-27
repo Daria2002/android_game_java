@@ -140,6 +140,13 @@ public class BasketGameState implements IGameState {
 
     @Override
     public void update(){
+        if(panel.isPaused()) {
+            // update lastSpawnTime, otherwise all objects will be spawned after pause
+            lastNormalSpawn = System.currentTimeMillis();
+            lastBadSpawn = System.currentTimeMillis();
+            lastLifeSpawn = System.currentTimeMillis();
+            return;
+        }
         figureContainer.update();
 
         // Spawn a new good ball figure
