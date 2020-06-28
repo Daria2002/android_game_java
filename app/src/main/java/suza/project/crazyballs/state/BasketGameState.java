@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import suza.project.crazyballs.GameActivity;
@@ -197,7 +198,6 @@ public class BasketGameState implements IGameState {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         synchronized (panel.getHolder()) {
-
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 long clickTime = System.currentTimeMillis();
 
@@ -227,7 +227,6 @@ public class BasketGameState implements IGameState {
                 figureContainer.handleActionUp((int) event.getX(), (int) event.getY());
             }
         }
-
         return true;
     }
 

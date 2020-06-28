@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -92,6 +93,14 @@ public class GameActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onStart() {
+        if(gamePanel.isPaused()) {
+            pauseListener.gamePaused();
+        }
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -115,6 +124,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        gamePanel.pause();
         Log.d(TAG, "Stopping main view...");
         super.onStop();
     }

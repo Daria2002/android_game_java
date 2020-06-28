@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MainActivity.REQUST_GET_SCORE &&
                 resultCode == Activity.RESULT_OK) {
         }
