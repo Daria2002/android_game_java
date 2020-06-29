@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         String[] levelString = new String[] {
-                "Easy", "Medium", "Difficult"
+                "EASY", "MEDIUM", "DIFFICULT"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                R.layout.support_simple_spinner_dropdown_item, levelString);
+                R.layout.spinner_style, levelString);
         levelSpinner.setAdapter(adapter);
     }
 
