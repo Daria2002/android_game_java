@@ -6,4 +6,5 @@
     <string name="exit_btn">EXIT</string>
     <string name="hs_btn">High scores</string>
     <string name="tutorial_btn">How to play</string>
+    <string name="level_drop_down">Choose level</string>
 </resources>

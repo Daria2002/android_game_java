@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btnHighscore)
     Button btnHighscore;
 
+    @BindView(R.id.levelSpinner)
+    Spinner levelSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        String[] levelString = new String[] {
+                "Easy", "Medium", "Difficult"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.support_simple_spinner_dropdown_item, levelString);
+        levelSpinner.setAdapter(adapter);
     }
 
     @Override

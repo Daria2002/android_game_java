@@ -82,4 +82,15 @@
         android:shadowColor="@android:color/white"
         android:text="@string/tutorial_btn"
         android:textColor="@android:color/white" />
+
+    <Spinner
+        android:text="@string/level_drop_down"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/white"
+        android:id="@+id/levelSpinner"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginBottom="52dp" />
 </RelativeLayout>
