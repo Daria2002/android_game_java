@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         String[] levelString = new String[] {
-                "EASY", "MEDIUM", "DIFFICULT"
+                getString(R.string.easy), getString(R.string.medium), getString(R.string.hard)
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_style, levelString);
@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btnPlay)
     public void playButtonAction(View view) {
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        intent.putExtra("difficulty", (String)levelSpinner.getSelectedItem());
         startActivityForResult(intent, MainActivity.REQUST_GET_SCORE);
     }
-
 
     /**
      * Action performed when how to play button is pressed.

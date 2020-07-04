@@ -7,4 +7,7 @@
     <string name="hs_btn">High scores</string>
     <string name="tutorial_btn">How to play</string>
     <string name="level_drop_down">Choose level</string>
+    <string name="hard">HARD</string>
+    <string name="medium">MEDIUM</string>
+    <string name="easy">EASY</string>
 </resources>

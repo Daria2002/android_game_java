@@ -18,6 +18,7 @@ import android.widget.EditText;
 
 import suza.project.crazyballs.game.GamePanel;
 import suza.project.crazyballs.state.BasketGameState;
+import suza.project.crazyballs.state.LevelConfig;
 import suza.project.crazyballs.util.IGameFinishedListener;
 import suza.project.crazyballs.util.IGamePausedListener;
 
@@ -103,6 +104,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String difficulty = getIntent().getStringExtra("difficulty");
+        LevelConfig levelConfig = set_level_config(difficulty);
 
         // Turn off the title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -112,7 +115,7 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         gamePanel = new GamePanel(this);
-        BasketGameState basketGameState = new BasketGameState(gamePanel);
+        BasketGameState basketGameState = new BasketGameState(gamePanel, levelConfig);
         basketGameState.setGamePausedListener(pauseListener);
         basketGameState.setGameFinishedListener(finishedListener);
         gamePanel.setGameState(basketGameState);
@@ -120,6 +123,15 @@ public class GameActivity extends AppCompatActivity {
         // Set Game panel as the view
         setContentView(gamePanel);
         Log.d(TAG, "Game surface created.");
+    }
+
+    private LevelConfig set_level_config(String difficulty) {
+        if(difficulty.equals(getResources().getString(R.string.hard))) {
+            return LevelConfig.generate_hard();
+        } else if(difficulty.equals(getResources().getString(R.string.medium))) {
+            return LevelConfig.generate_medium();
+        }
+        return LevelConfig.generate_easy();
     }
 
     @Override

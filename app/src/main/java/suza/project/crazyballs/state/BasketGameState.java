@@ -46,15 +46,12 @@ public class BasketGameState implements IGameState {
             score += amount;
         }
     };
+    private final LevelConfig levelConfig;
 
     /**
      * Time last click was registered.
      */
     private long lastClickTime = 0;
-
-    private int normalBallSpawnPeriod = 2000; //ms
-    private int lifeBallSpawnPeriod = 10000; // ms
-    private int badBallSpawnPeriod = 5000;  // ms
 
     private long lastNormalSpawn;
     private long lastLifeSpawn;
@@ -89,9 +86,9 @@ public class BasketGameState implements IGameState {
      */
     private int score = 0;
 
-    public BasketGameState(GamePanel panel) {
+    public BasketGameState(GamePanel panel, LevelConfig levelConfig) {
         this.panel = panel;
-
+        this.levelConfig = levelConfig;
         // Make a figure container
         figureContainer = new BasketBallContainer(panel);
 
@@ -151,9 +148,9 @@ public class BasketGameState implements IGameState {
         figureContainer.update();
 
         // Spawn a new good ball figure
-        if (System.currentTimeMillis() - lastNormalSpawn >= normalBallSpawnPeriod) {
+        if (System.currentTimeMillis() - lastNormalSpawn >= levelConfig.getNormalBallSpawnPeriod()) {
             lastNormalSpawn = System.currentTimeMillis();
-            normalBallSpawnPeriod = Util.randomInteger(3, 5) * 1000;
+            levelConfig.randomizeNormalPeriod();
 
             BasketBallGoodFigure newFigure = new BasketBallGoodFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
@@ -161,9 +158,9 @@ public class BasketGameState implements IGameState {
         }
 
         // Spawn a bad figure
-        if (System.currentTimeMillis() - lastBadSpawn >= badBallSpawnPeriod) {
+        if (System.currentTimeMillis() - lastBadSpawn >= levelConfig.getBadBallSpawnPeriod()) {
             lastBadSpawn = System.currentTimeMillis();
-            badBallSpawnPeriod = Util.randomInteger(7, 9) * 1000;
+            levelConfig.randomizeBadPeriod();
 
             BasketBallBadFigure newFigure = new BasketBallBadFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
@@ -171,9 +168,9 @@ public class BasketGameState implements IGameState {
         }
 
         // Spawn a new life figure
-        if (System.currentTimeMillis() - lastLifeSpawn >= lifeBallSpawnPeriod) {
+        if (System.currentTimeMillis() - lastLifeSpawn >= levelConfig.getLifeBallSpawnPeriod()) {
             lastLifeSpawn = System.currentTimeMillis();
-            lifeBallSpawnPeriod = Util.randomInteger(7, 12) * 1000;
+            levelConfig.randomizeLifePeriod();
 
             HeartFigure newFigure = new HeartFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
