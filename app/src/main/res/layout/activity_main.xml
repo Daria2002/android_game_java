@@ -34,6 +34,13 @@
         android:paddingLeft="60dp"
         />
 
+    <Spinner
+        android:id="@+id/levelSpinner"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnPlay"/>
+
     <Button
         android:id="@+id/btnExit"
         android:text="@string/exit_btn"
@@ -82,12 +89,4 @@
         android:shadowColor="@android:color/white"
         android:text="@string/tutorial_btn"
         android:textColor="@android:color/white" />
-
-    <Spinner
-        android:id="@+id/levelSpinner"
-        android:layout_width="242dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="380dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginBottom="52dp" />
 </RelativeLayout>
