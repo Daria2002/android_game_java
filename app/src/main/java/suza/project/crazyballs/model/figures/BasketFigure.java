@@ -70,7 +70,8 @@ public class BasketFigure extends AbstractFigure {
 
         // Set basket starting place
         setX(gamePanel.getScreenWidth() / 2);
-        setY(gamePanel.getScreenHeight() - navBarHeight - getBitmap().getHeight() / 2 - OFFSET);
+        // setY(gamePanel.getScreenHeight() - navBarHeight - getBitmap().getHeight() / 2 - OFFSET);
+        setY(gamePanel.getScreenHeight() - getBitmap().getHeight());
 
         this.panel = gamePanel;
         this.figureContainer = figureContainter;
