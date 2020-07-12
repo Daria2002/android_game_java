@@ -4,6 +4,10 @@ import suza.project.crazyballs.R;
 import suza.project.crazyballs.util.Util;
 
 public class LevelConfig {
+
+        public int good_ball_score = 10;
+        public int bad_ball_score = -5;
+
         public int getNormalBallSpawnPeriod() {
                 return normalBallSpawnPeriod;
         }
@@ -24,6 +28,7 @@ public class LevelConfig {
 
         LevelConfig(double multiplier) {
                 this.multiplier = multiplier;
+                good_ball_score /= multiplier;
                 randomizeNormalPeriod();
                 randomizeBadPeriod();
                 randomizeLifePeriod();

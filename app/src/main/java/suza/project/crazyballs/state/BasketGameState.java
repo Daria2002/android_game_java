@@ -93,7 +93,7 @@ public class BasketGameState implements IGameState {
         figureContainer = new BasketBallContainer(panel);
 
         // Add a basket figure
-        BasketFigure basketFigure = new BasketFigure(panel, figureContainer);
+        BasketFigure basketFigure = new BasketFigure(panel, figureContainer, levelConfig);
         basketFigure.addGameInfoListener(defaultListener);
 
         figureContainer.addFigure(basketFigure);

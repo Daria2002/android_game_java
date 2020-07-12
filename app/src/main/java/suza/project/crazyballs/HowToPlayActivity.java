@@ -41,7 +41,7 @@ public class HowToPlayActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         text.setTextSize(20);
-        text.setText("How to play Crazy Balls?\nCatch good balls to score 10 points.\nCatch bad balls but lose 5 points.\n");
+        text.setText("How to play Crazy Balls?\nCatch good balls to score 7/10/14 points depending on the level.\nCatch bad balls but lose 5 points.\n");
     }
 
     /**

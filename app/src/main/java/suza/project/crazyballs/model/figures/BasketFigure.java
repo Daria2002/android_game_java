@@ -15,6 +15,7 @@ import suza.project.crazyballs.model.properties.Collision;
 import suza.project.crazyballs.model.properties.FigureState;
 import suza.project.crazyballs.model.properties.FigureType;
 import suza.project.crazyballs.model.properties.MySpeed;
+import suza.project.crazyballs.state.LevelConfig;
 
 /**
  * Figure representing a basket in basket ball game.
@@ -26,11 +27,9 @@ public class BasketFigure extends AbstractFigure {
 
     public static final String TAG = BasketFigure.class.getSimpleName();
 
-    public static final int GOOD_BALL_SCORE = 10;
-    public static final int BAD_BALL_SCORE = -5;
-
     private static final int OFFSET = 20;
 
+    private LevelConfig levelConfig;
     private GamePanel panel;
     private BasketBallContainer figureContainer;
 
@@ -55,10 +54,10 @@ public class BasketFigure extends AbstractFigure {
     private long dt;
     private long tOld;
 
-    public BasketFigure(GamePanel gamePanel, BasketBallContainer figureContainter) {
+    public BasketFigure(GamePanel gamePanel, BasketBallContainer figureContainter, LevelConfig levelConfig) {
         super(BitmapFactory.decodeResource(gamePanel.getResources(), R.drawable.basket),
                 0, 0);
-
+        this.levelConfig = levelConfig;
         // Get navigation bar height in order to place the basket properly on screen
         Resources resources = gamePanel.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
@@ -202,9 +201,9 @@ public class BasketFigure extends AbstractFigure {
             }
 
             if (basketList.get(i).getType() == FigureType.BAD_BALL) {
-                score += BAD_BALL_SCORE;
+                score += levelConfig.bad_ball_score;
             } else if (basketList.get(i).getType() == FigureType.BALL){
-                score += GOOD_BALL_SCORE;
+                score += levelConfig.good_ball_score;
             }
 
             basketList.get(i).setState(FigureState.DEAD);
