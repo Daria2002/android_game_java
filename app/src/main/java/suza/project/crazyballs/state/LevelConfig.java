@@ -20,8 +20,13 @@ public class LevelConfig {
                 return badBallSpawnPeriod;
         }
 
+        public int getStarBallSpawnPeriod() {
+                return starBallSpawnPeriod;
+        }
+
         private int normalBallSpawnPeriod = 2000; //ms
         private int lifeBallSpawnPeriod = 10000; // ms
+        private int starBallSpawnPeriod = 20000; // ms
         private int badBallSpawnPeriod = 5000;  // ms
 
         private double multiplier;
@@ -56,5 +61,9 @@ public class LevelConfig {
 
         public void randomizeLifePeriod() {
                 lifeBallSpawnPeriod = (int) (Util.randomInteger(7, 12) * 1000 * multiplier);
+        }
+
+        public void randomizeStarPeriod() {
+                starBallSpawnPeriod = (int) (Util.randomInteger(17, 22) * 1000 * multiplier);
         }
 }

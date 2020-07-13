@@ -1,5 +1,6 @@
 package suza.project.crazyballs.model.figures;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -7,7 +8,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import suza.project.crazyballs.GameActivity;
 import suza.project.crazyballs.R;
+import suza.project.crazyballs.ResultActivity;
 import suza.project.crazyballs.game.GamePanel;
 import suza.project.crazyballs.model.components.AbstractFigure;
 import suza.project.crazyballs.model.containers.BasketBallContainer;
@@ -198,6 +201,26 @@ public class BasketFigure extends AbstractFigure {
 
             if (basketList.get(i).getType() == FigureType.LIFE_BALL) {
                 life++;
+            }
+
+            if(basketList.get(i).getType() == FigureType.STAR) {
+                // remove all figures except bad balls from a screen and add scores
+                // for all good balls and add one extra life for a heart figure
+                for (AbstractFigure figure: figureContainer.getFigures()) {
+                    // If it's a basket or in a basket continue
+                    if (figure.equals(this) || basketContains(figure)) {
+                        continue;
+                    } else {
+                        if (figure.getType() == FigureType.BALL) {
+                            score += levelConfig.good_ball_score;
+                        } else if (figure.getType() == FigureType.LIFE_BALL) {
+                            life++;
+                        }
+                        if (figure.getType() != FigureType.BAD_BALL) {
+                            figure.setState(FigureState.DEAD);
+                        }
+                    }
+                }
             }
 
             if (basketList.get(i).getType() == FigureType.BAD_BALL) {

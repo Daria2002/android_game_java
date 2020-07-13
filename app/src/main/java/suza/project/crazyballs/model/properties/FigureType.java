@@ -35,5 +35,10 @@ public enum FigureType {
     /**
      * Type used for generic figures.
      */
-    GENERIC
+    GENERIC,
+
+    /**
+     * Type used for star.
+     */
+    STAR
 }

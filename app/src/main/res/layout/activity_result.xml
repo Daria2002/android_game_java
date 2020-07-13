@@ -23,7 +23,6 @@
 
 
     <ScrollView
-        android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -32,12 +31,10 @@
         android:layout_marginBottom="50sp">
 
         <HorizontalScrollView
-            android:id="@+id/hscrll1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/RelativeLayout1"
                 android:layout_width="fill_parent"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
@@ -54,7 +51,7 @@
         </HorizontalScrollView>
     </ScrollView>
 
-    <RelativeLayout android:id="@+id/linearLayout2"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-50sp">

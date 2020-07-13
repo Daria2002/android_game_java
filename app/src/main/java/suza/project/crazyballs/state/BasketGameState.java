@@ -18,6 +18,7 @@ import suza.project.crazyballs.model.figures.BasketBallBadFigure;
 import suza.project.crazyballs.model.figures.BasketBallGoodFigure;
 import suza.project.crazyballs.model.figures.BasketFigure;
 import suza.project.crazyballs.model.figures.HeartFigure;
+import suza.project.crazyballs.model.figures.StarFigure;
 import suza.project.crazyballs.model.properties.Collision;
 import suza.project.crazyballs.util.IGameFinishedListener;
 import suza.project.crazyballs.util.IGameInfoListener;
@@ -55,6 +56,7 @@ public class BasketGameState implements IGameState {
 
     private long lastNormalSpawn;
     private long lastLifeSpawn;
+    private long lastStarSpawn;
     private long lastBadSpawn;
 
     /**
@@ -106,6 +108,7 @@ public class BasketGameState implements IGameState {
 
         lastNormalSpawn = System.currentTimeMillis();
         lastLifeSpawn = System.currentTimeMillis();
+        lastStarSpawn = System.currentTimeMillis();
         lastBadSpawn = System.currentTimeMillis();
         lifeHeart = BitmapFactory.decodeResource(panel.getResources(), R.drawable.heart);
         pause = BitmapFactory.decodeResource(panel.getResources(), R.drawable.pause);
@@ -143,6 +146,7 @@ public class BasketGameState implements IGameState {
             lastNormalSpawn = System.currentTimeMillis();
             lastBadSpawn = System.currentTimeMillis();
             lastLifeSpawn = System.currentTimeMillis();
+            lastStarSpawn = System.currentTimeMillis();
             return;
         }
         figureContainer.update();
@@ -173,6 +177,16 @@ public class BasketGameState implements IGameState {
             levelConfig.randomizeLifePeriod();
 
             HeartFigure newFigure = new HeartFigure(panel, figureContainer);
+            newFigure.addGameInfoListener(defaultListener);
+            figureContainer.addFigure(newFigure);
+        }
+
+        // Spawn a new star figure
+        if (System.currentTimeMillis() - lastStarSpawn >= levelConfig.getStarBallSpawnPeriod()) {
+            lastStarSpawn = System.currentTimeMillis();
+            levelConfig.randomizeStarPeriod();
+
+            StarFigure newFigure = new StarFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
             figureContainer.addFigure(newFigure);
         }
