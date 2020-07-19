@@ -7,10 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import suza.project.crazyballs.GameActivity;
 import suza.project.crazyballs.R;
 import suza.project.crazyballs.game.GamePanel;
 import suza.project.crazyballs.model.containers.BasketBallContainer;
@@ -18,12 +16,12 @@ import suza.project.crazyballs.model.figures.BasketBallBadFigure;
 import suza.project.crazyballs.model.figures.BasketBallGoodFigure;
 import suza.project.crazyballs.model.figures.BasketFigure;
 import suza.project.crazyballs.model.figures.HeartFigure;
+import suza.project.crazyballs.model.figures.LifeSaver;
 import suza.project.crazyballs.model.figures.StarFigure;
 import suza.project.crazyballs.model.properties.Collision;
 import suza.project.crazyballs.util.IGameFinishedListener;
 import suza.project.crazyballs.util.IGameInfoListener;
 import suza.project.crazyballs.util.IGamePausedListener;
-import suza.project.crazyballs.util.Util;
 
 /**
  * Catch balls in basket. Double click basket to store balls.
@@ -57,6 +55,7 @@ public class BasketGameState implements IGameState {
     private long lastNormalSpawn;
     private long lastLifeSpawn;
     private long lastStarSpawn;
+    private long lastLifeSaverSpawn;
     private long lastBadSpawn;
 
     /**
@@ -110,6 +109,7 @@ public class BasketGameState implements IGameState {
         lastLifeSpawn = System.currentTimeMillis();
         lastStarSpawn = System.currentTimeMillis();
         lastBadSpawn = System.currentTimeMillis();
+        lastLifeSaverSpawn = System.currentTimeMillis();
         lifeHeart = BitmapFactory.decodeResource(panel.getResources(), R.drawable.heart);
         pause = BitmapFactory.decodeResource(panel.getResources(), R.drawable.pause);
     }
@@ -182,11 +182,21 @@ public class BasketGameState implements IGameState {
         }
 
         // Spawn a new star figure
-        if (System.currentTimeMillis() - lastStarSpawn >= levelConfig.getStarBallSpawnPeriod()) {
+        if (System.currentTimeMillis() - lastStarSpawn >= levelConfig.getStarSpawnPeriod()) {
             lastStarSpawn = System.currentTimeMillis();
             levelConfig.randomizeStarPeriod();
 
             StarFigure newFigure = new StarFigure(panel, figureContainer);
+            newFigure.addGameInfoListener(defaultListener);
+            figureContainer.addFigure(newFigure);
+        }
+
+        // Spawn a new life saver
+        if (System.currentTimeMillis() - lastLifeSaverSpawn >= levelConfig.getLifeSaverSpawnPeriod()) {
+            lastLifeSaverSpawn = System.currentTimeMillis();
+            levelConfig.randomizeLifeSaverPeriod();
+
+            LifeSaver newFigure = new LifeSaver(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
             figureContainer.addFigure(newFigure);
         }

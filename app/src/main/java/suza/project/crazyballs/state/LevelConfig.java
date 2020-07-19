@@ -1,6 +1,5 @@
 package suza.project.crazyballs.state;
 
-import suza.project.crazyballs.R;
 import suza.project.crazyballs.util.Util;
 
 public class LevelConfig {
@@ -20,13 +19,18 @@ public class LevelConfig {
                 return badBallSpawnPeriod;
         }
 
-        public int getStarBallSpawnPeriod() {
-                return starBallSpawnPeriod;
+        public int getStarSpawnPeriod() {
+                return starSpawnPeriod;
+        }
+
+        public int getLifeSaverSpawnPeriod() {
+                return lifeSaverSpawnPeriod;
         }
 
         private int normalBallSpawnPeriod = 2000; //ms
         private int lifeBallSpawnPeriod = 10000; // ms
-        private int starBallSpawnPeriod = 20000; // ms
+        private int starSpawnPeriod = 20000; // ms
+        private int lifeSaverSpawnPeriod = 20000; // ms
         private int badBallSpawnPeriod = 5000;  // ms
 
         private double multiplier;
@@ -64,6 +68,10 @@ public class LevelConfig {
         }
 
         public void randomizeStarPeriod() {
-                starBallSpawnPeriod = (int) (Util.randomInteger(17, 22) * 1000 * multiplier);
+                starSpawnPeriod = (int) (Util.randomInteger(17, 22) * 1000 * multiplier);
+        }
+
+        public void randomizeLifeSaverPeriod() {
+                lifeSaverSpawnPeriod = (int) (Util.randomInteger(17, 22) * 1000 * multiplier);
         }
 }
