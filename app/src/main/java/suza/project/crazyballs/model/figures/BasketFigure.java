@@ -223,6 +223,11 @@ public class BasketFigure extends AbstractFigure {
                 }
             }
 
+            // if life saver in the basket pause losing lifes for 10s
+            if (basketList.get(i).getType() == FigureType.LIFE_SAVER) {
+
+            }
+
             if (basketList.get(i).getType() == FigureType.BAD_BALL) {
                 score += levelConfig.bad_ball_score;
             } else if (basketList.get(i).getType() == FigureType.BALL){

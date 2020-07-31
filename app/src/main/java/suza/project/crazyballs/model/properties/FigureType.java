@@ -40,5 +40,10 @@ public enum FigureType {
     /**
      * Type used for star.
      */
-    STAR
+    STAR,
+
+    /**
+     * Type used for life saver
+     */
+    LIFE_SAVER
 }

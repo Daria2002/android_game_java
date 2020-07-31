@@ -19,8 +19,6 @@ import suza.project.crazyballs.model.properties.FigureType;
 public class BasketBallContainer extends FigureContainer {
 
     private static final String TAG = BasketBallContainer.class.getSimpleName();
-    private int score = 0;
-    private int lives = 0;
 
     /**
      * Constructor for the figure container.

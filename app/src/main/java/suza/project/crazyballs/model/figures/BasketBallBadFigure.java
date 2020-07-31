@@ -81,7 +81,7 @@ public class BasketBallBadFigure extends AbstractAnimation {
             setState(FigureState.DEAD);
 
             // Signal that the lives changed
-            livesChanged(-1);
+            livesChanged(-1); // TODO: check if life saver on (amount = 0), otherwise -1
         }
     }
 }
