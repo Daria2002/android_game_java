@@ -24,7 +24,7 @@ import suza.project.crazyballs.util.Util;
 public class BasketBallBadFigure extends AbstractAnimation {
 
     BasketBallContainer figureContainer;
-    GamePanel gamePanel;
+    GamePanel panel;
 
     public BasketBallBadFigure(GamePanel gamePanel, BasketBallContainer figureContainer) {
         super(BitmapFactory.decodeResource(
@@ -38,7 +38,7 @@ public class BasketBallBadFigure extends AbstractAnimation {
         ));
 
         this.figureContainer = figureContainer;
-        this.gamePanel = gamePanel;
+        this.panel = gamePanel;
         super.getSpeed().setGravity(true);
         setState(FigureState.ALIVE);
         setType(FigureType.BAD_BALL);
@@ -77,11 +77,16 @@ public class BasketBallBadFigure extends AbstractAnimation {
         getSpeed().update();
 
         // If out of the bottom of the screen set to DEAD
-        if (getY() > gamePanel.getHeight() + 2 * getRadius()) {
+        if (getY() > panel.getHeight() + 2 * getRadius()) {
             setState(FigureState.DEAD);
 
-            // Signal that the lives changed
-            livesChanged(-1); // TODO: check if life saver on (amount = 0), otherwise -1
+            // life saving mode off
+            if(panel.lifeSavingTime < System.currentTimeMillis()) {
+                System.out.println("Life saving mode off");
+                livesChanged(-1); // Signal that the lives changed
+            } else {
+                System.out.println("Life saving mode on");
+            }
         }
     }
 }

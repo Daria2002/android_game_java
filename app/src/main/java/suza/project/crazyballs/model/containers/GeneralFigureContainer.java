@@ -49,7 +49,6 @@ public class GeneralFigureContainer extends FigureContainer{
 
             // If figure is not alive remove it
             removeFigure(i);
-            Log.d(TAG, "Figure removed. " + getFigureCount() + " left.");
         }
     }
 

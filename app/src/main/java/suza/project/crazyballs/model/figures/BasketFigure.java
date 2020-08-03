@@ -193,17 +193,24 @@ public class BasketFigure extends AbstractFigure {
         int i = 0;
         int life = 0;
         int score = 0;
+        Log.d(TAG, "basket list size = " + basketList.size());
         while(i < basketList.size()) {
-            if (basketList.get(i).getType() == FigureType.STATIC_BALL) {
+            // if life saver in the basket pause losing lifes for 10s
+            if (basketList.get(i).getType() == FigureType.LIFE_SAVER) {
+                Log.d(TAG, "Life saving time updated");
+                panel.lifeSavingTime = System.currentTimeMillis();
+            }
+
+            else if (basketList.get(i).getType() == FigureType.STATIC_BALL) {
                 i++;
                 continue;
             }
 
-            if (basketList.get(i).getType() == FigureType.LIFE_BALL) {
+            else if (basketList.get(i).getType() == FigureType.LIFE_BALL) {
                 life++;
             }
 
-            if(basketList.get(i).getType() == FigureType.STAR) {
+            else if(basketList.get(i).getType() == FigureType.STAR) {
                 // remove all figures except bad balls from a screen and add scores
                 // for all good balls and add one extra life for a heart figure
                 for (AbstractFigure figure: figureContainer.getFigures()) {
@@ -223,12 +230,7 @@ public class BasketFigure extends AbstractFigure {
                 }
             }
 
-            // if life saver in the basket pause losing lifes for 10s
-            if (basketList.get(i).getType() == FigureType.LIFE_SAVER) {
-
-            }
-
-            if (basketList.get(i).getType() == FigureType.BAD_BALL) {
+            else if (basketList.get(i).getType() == FigureType.BAD_BALL) {
                 score += levelConfig.bad_ball_score;
             } else if (basketList.get(i).getType() == FigureType.BALL){
                 score += levelConfig.good_ball_score;
@@ -258,7 +260,6 @@ public class BasketFigure extends AbstractFigure {
     public void addFigure(AbstractFigure figure) {
         if (!basketList.contains(figure)) {
             basketList.add(figure);
-            Log.d(TAG, "Figure " + figure.getID() + " in the basket");
         }
     }
 

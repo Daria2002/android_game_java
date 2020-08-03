@@ -81,7 +81,6 @@ public abstract class AbstractFigure implements IGameInfoProvider{
         this.bitmap = bitmap;
         this.x = x;
         this.y = y;
-        Log.d(TAG, "Creating a new figure at: x= " + x +" y= " + y);
     }
 
     public boolean isTouched() {

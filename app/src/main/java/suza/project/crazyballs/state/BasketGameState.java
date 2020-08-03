@@ -16,7 +16,7 @@ import suza.project.crazyballs.model.figures.BasketBallBadFigure;
 import suza.project.crazyballs.model.figures.BasketBallGoodFigure;
 import suza.project.crazyballs.model.figures.BasketFigure;
 import suza.project.crazyballs.model.figures.HeartFigure;
-import suza.project.crazyballs.model.figures.LifeSaver;
+import suza.project.crazyballs.model.figures.LifeSaverFigure;
 import suza.project.crazyballs.model.figures.StarFigure;
 import suza.project.crazyballs.model.properties.Collision;
 import suza.project.crazyballs.util.IGameFinishedListener;
@@ -196,7 +196,7 @@ public class BasketGameState implements IGameState {
             lastLifeSaverSpawn = System.currentTimeMillis();
             levelConfig.randomizeLifeSaverPeriod();
 
-            LifeSaver newFigure = new LifeSaver(panel, figureContainer);
+            LifeSaverFigure newFigure = new LifeSaverFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
             figureContainer.addFigure(newFigure);
         }
@@ -224,12 +224,10 @@ public class BasketGameState implements IGameState {
 
                 if (clickTime - lastClickTime < DOUBLE_CLICK_DELTA) {
                     // Double click detected
-                    Log.d(TAG, "Double click detected");
                     figureContainer.handleActionDoubleDown((int) event.getX(), (int) event.getY());
 
                 } else {
                     // Single click detected
-                    Log.d(TAG, "Single click detected");
                     figureContainer.handleActionDown((int) event.getX(), (int) event.getY());
                     if(pauseClicked(event.getX(), event.getY())) {
                         pauseListener.gamePaused();

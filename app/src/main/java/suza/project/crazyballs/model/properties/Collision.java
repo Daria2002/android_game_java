@@ -127,8 +127,6 @@ public class Collision {
         }
 
         // Resolve collision
-        Log.d(TAG, "Collision detected between objects: "
-                + fig1.getID() + " and " + fig2.getID());
         double angle = Math.atan2(dy, dx);
         angle = angle > 0 ? angle : angle + 2 * Math.PI;
         double targetX = fig1.getX() + Math.cos(angle) * minDist;
@@ -173,10 +171,7 @@ public class Collision {
 
             //Neat vector maths, used for checking if the objects moves towards one another.
             if (dotProduct > 0) {
-                // Resolve collision
-                Log.d(TAG, "Collision detected between objects: "
-                       + fig1.getID() + " and " + fig2.getID());
-
+                // Resolve collision between objects
                 double collisionScale = dotProduct / distSquared;
                 double xCollision = xDist * collisionScale;
                 double yCollision = yDist * collisionScale;

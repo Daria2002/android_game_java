@@ -26,6 +26,10 @@ import suza.project.crazyballs.util.IGameFinishedListener;
  */
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
+    /**
+     * life saving time
+     */
+    public long lifeSavingTime = -1;
 
     /**
      * Class tag used for logging.

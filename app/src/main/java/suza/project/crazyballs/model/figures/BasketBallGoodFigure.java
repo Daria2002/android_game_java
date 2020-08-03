@@ -80,9 +80,13 @@ public class BasketBallGoodFigure extends AbstractAnimation {
         if (getY() > panel.getHeight() + 2*getRadius()) {
             setState(FigureState.DEAD);
 
-            // Signal that the lives changed
-            livesChanged(-1); // TODO: check if life saver on (amount = 0), otherwise -1
+            // life saving mode off
+            if(panel.lifeSavingTime < System.currentTimeMillis()) {
+                System.out.println("Life saving mode off");
+                livesChanged(-1); // Signal that the lives changed
+            } else {
+                System.out.println("Life saving mode on");
+            }
         }
     }
-
 }

@@ -22,12 +22,12 @@ import suza.project.crazyballs.util.Util;
  * Created by lmark on 16/09/2017.
  */
 
-public class LifeSaver extends AbstractAnimation {
+public class LifeSaverFigure extends AbstractAnimation {
 
     BasketBallContainer figureContainer;
     GamePanel gamePanel;
 
-    public LifeSaver(GamePanel gamePanel, BasketBallContainer figureContainer) {
+    public LifeSaverFigure(GamePanel gamePanel, BasketBallContainer figureContainer) {
         super(BitmapFactory.decodeResource(
                 gamePanel.getResources(),
                 R.drawable.life_saver_animation),
@@ -42,7 +42,7 @@ public class LifeSaver extends AbstractAnimation {
         this.gamePanel = gamePanel;
         super.getSpeed().setGravity(true);
         setState(FigureState.ALIVE);
-        setType(FigureType.LIFE_BALL);
+        setType(FigureType.LIFE_SAVER);
     }
 
     @Override
