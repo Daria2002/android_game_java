@@ -1,6 +1,7 @@
 package suza.project.crazyballs.model.figures;
 
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.util.List;
 
@@ -79,6 +80,9 @@ public class BasketBallGoodFigure extends AbstractAnimation {
         // If out of the bottom of the screen set to DEAD
         if (getY() > panel.getHeight() + 2*getRadius()) {
             setState(FigureState.DEAD);
+
+            Log.d("good ball", "panel.lifeSavingTime = " + panel.lifeSavingTime);
+            Log.d("good ball", "System.currentTimeMills = " + System.currentTimeMillis());
 
             // life saving mode off
             if(panel.lifeSavingTime < System.currentTimeMillis()) {

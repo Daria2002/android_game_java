@@ -193,12 +193,10 @@ public class BasketFigure extends AbstractFigure {
         int i = 0;
         int life = 0;
         int score = 0;
-        Log.d(TAG, "basket list size = " + basketList.size());
         while(i < basketList.size()) {
-            // if life saver in the basket pause losing lifes for 10s
+            // if life saver in the basket pause losing hearts for 10s
             if (basketList.get(i).getType() == FigureType.LIFE_SAVER) {
-                Log.d(TAG, "Life saving time updated");
-                panel.lifeSavingTime = System.currentTimeMillis();
+                panel.lifeSavingTime = System.currentTimeMillis() + 10 * 1000;
             }
 
             else if (basketList.get(i).getType() == FigureType.STATIC_BALL) {
@@ -299,7 +297,6 @@ public class BasketFigure extends AbstractFigure {
                     curr.getX() + curr.getRadius() <= getX() - getWidth()/2 ||
                     curr.getX() - curr.getRadius() >= getX() + getWidth()/2) {
 
-                Log.d(TAG, "Object " + curr.getID() + " removed from basket.");
                 basketList.remove(i);
                 continue;
             }

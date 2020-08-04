@@ -29,7 +29,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * life saving time
      */
-    public long lifeSavingTime = -1;
+    public long lifeSavingTime;
 
     /**
      * Class tag used for logging.
@@ -77,7 +77,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      */
     public GamePanel(Context context) {
         super(context);
-
+        lifeSavingTime = -1; // initialize life saving time
         // Get screen dimensions
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();

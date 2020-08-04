@@ -173,10 +173,6 @@ public class MainThread extends Thread {
                         sleepTime += FRAME_PERIOD;    // add frame period to check if in next frame
                         framesSkipped++;
                     }
-
-                    if (framesSkipped > 0) {
-                        Log.d(TAG, "Skipped:" + framesSkipped);
-                    }
                     // for statistics
                     framesSkippedPerStatCycle += framesSkipped;
                     // calling the routine to store the gathered statistics
