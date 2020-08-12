@@ -6,41 +6,40 @@ public class LevelConfig {
 
         public int good_ball_score = 10;
         public int bad_ball_score = -5;
+        private static int threshold = 2;
 
+        // randomize spawn period
         public int getNormalBallSpawnPeriod() {
-                return normalBallSpawnPeriod;
+                return (int) (Util.randomInteger(normalBallSpawnPeriod - threshold, normalBallSpawnPeriod + threshold) * 1000 * multiplier);
         }
 
         public int getLifeBallSpawnPeriod() {
-                return lifeBallSpawnPeriod;
+                return (int) (Util.randomInteger(lifeBallSpawnPeriod - threshold, lifeBallSpawnPeriod + threshold) * 1000 * multiplier);
         }
 
         public int getBadBallSpawnPeriod() {
-                return badBallSpawnPeriod;
+                return (int) (Util.randomInteger(badBallSpawnPeriod - threshold, badBallSpawnPeriod + threshold) * 1000 * multiplier);
         }
 
         public int getStarSpawnPeriod() {
-                return starSpawnPeriod;
+                return (int) (Util.randomInteger(starSpawnPeriod - threshold, starSpawnPeriod + threshold) * 1000 * multiplier);
         }
 
         public int getLifeSaverSpawnPeriod() {
-                return lifeSaverSpawnPeriod;
+                return (int) (Util.randomInteger(lifeSaverSpawnPeriod - threshold, lifeSaverSpawnPeriod + threshold) * 1000 * multiplier);
         }
 
-        private int normalBallSpawnPeriod = 2000; //ms
-        private int lifeBallSpawnPeriod = 10000; // ms
-        private int starSpawnPeriod = 20000; // ms
-        private int lifeSaverSpawnPeriod = 20000; // ms
-        private int badBallSpawnPeriod = 5000;  // ms
+        private int normalBallSpawnPeriod = 5; // s
+        private int lifeBallSpawnPeriod = 20; // s
+        private int starSpawnPeriod = 20; // s
+        private int lifeSaverSpawnPeriod = 20; // s
+        private int badBallSpawnPeriod = 5;  // s
 
         private double multiplier;
 
         LevelConfig(double multiplier) {
                 this.multiplier = multiplier;
                 good_ball_score /= multiplier;
-                randomizeNormalPeriod();
-                randomizeBadPeriod();
-                randomizeLifePeriod();
         }
 
         public static LevelConfig generate_hard() {
@@ -53,25 +52,5 @@ public class LevelConfig {
 
         public static LevelConfig generate_easy() {
                 return new LevelConfig(1.3);
-        }
-
-        public void randomizeNormalPeriod() {
-                normalBallSpawnPeriod = (int) (Util.randomInteger(3, 5) * 1000 * multiplier);
-        }
-
-        public void randomizeBadPeriod() {
-                badBallSpawnPeriod = (int) (Util.randomInteger(7, 9) * 1000 * multiplier);
-        }
-
-        public void randomizeLifePeriod() {
-                lifeBallSpawnPeriod = (int) (Util.randomInteger(7, 12) * 1000 * multiplier);
-        }
-
-        public void randomizeStarPeriod() {
-                starSpawnPeriod = (int) (Util.randomInteger(17, 22) * 1000 * multiplier);
-        }
-
-        public void randomizeLifeSaverPeriod() {
-                lifeSaverSpawnPeriod = (int) (Util.randomInteger(17, 22) * 1000 * multiplier);
         }
 }

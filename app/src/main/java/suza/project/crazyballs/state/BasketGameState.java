@@ -154,7 +154,6 @@ public class BasketGameState implements IGameState {
         // Spawn a new good ball figure
         if (System.currentTimeMillis() - lastNormalSpawn >= levelConfig.getNormalBallSpawnPeriod()) {
             lastNormalSpawn = System.currentTimeMillis();
-            levelConfig.randomizeNormalPeriod();
 
             BasketBallGoodFigure newFigure = new BasketBallGoodFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
@@ -164,7 +163,6 @@ public class BasketGameState implements IGameState {
         // Spawn a bad figure
         if (System.currentTimeMillis() - lastBadSpawn >= levelConfig.getBadBallSpawnPeriod()) {
             lastBadSpawn = System.currentTimeMillis();
-            levelConfig.randomizeBadPeriod();
 
             BasketBallBadFigure newFigure = new BasketBallBadFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
@@ -174,7 +172,6 @@ public class BasketGameState implements IGameState {
         // Spawn a new life figure
         if (System.currentTimeMillis() - lastLifeSpawn >= levelConfig.getLifeBallSpawnPeriod()) {
             lastLifeSpawn = System.currentTimeMillis();
-            levelConfig.randomizeLifePeriod();
 
             HeartFigure newFigure = new HeartFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
@@ -184,7 +181,6 @@ public class BasketGameState implements IGameState {
         // Spawn a new star figure
         if (System.currentTimeMillis() - lastStarSpawn >= levelConfig.getStarSpawnPeriod()) {
             lastStarSpawn = System.currentTimeMillis();
-            levelConfig.randomizeStarPeriod();
 
             StarFigure newFigure = new StarFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
@@ -194,7 +190,6 @@ public class BasketGameState implements IGameState {
         // Spawn a new life saver
         if (System.currentTimeMillis() - lastLifeSaverSpawn >= levelConfig.getLifeSaverSpawnPeriod()) {
             lastLifeSaverSpawn = System.currentTimeMillis();
-            levelConfig.randomizeLifeSaverPeriod();
 
             LifeSaverFigure newFigure = new LifeSaverFigure(panel, figureContainer);
             newFigure.addGameInfoListener(defaultListener);
