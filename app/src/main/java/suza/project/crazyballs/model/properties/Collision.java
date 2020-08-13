@@ -245,8 +245,6 @@ public class Collision {
             ball.getSpeed().setXDirection(MySpeed.DIRECTION_LEFT);
             ball.getSpeed().increaseSpeed(basket.getSpeed().getX(), 0);
             ball.setX(ball.getX() -  2);
-            //Log.d(TAG, "Ball " + ball.getID() + " outside left collision with basket.");
-
             return true;
         }
 
@@ -258,7 +256,6 @@ public class Collision {
             ball.getSpeed().setXDirection(MySpeed.DIRECTION_RIGHT);
             ball.getSpeed().increaseSpeed(basket.getSpeed().getX(), 0);
             ball.setX(ball.getX() + 2);
-            //Log.d(TAG, "Ball " + ball.getID() + " outside right collision with basket.");
             return true;
         }
 
@@ -288,8 +285,6 @@ public class Collision {
             if (ball.getSpeed().getAmplitude() > 2) {
                 ball.getSpeed().mul(0.5);
             }
-            //Log.d(TAG, "Ball " + ball.getID() + " inside left collision with basket.");
-
             return true;
         }
 
@@ -303,12 +298,10 @@ public class Collision {
             if (ball.getSpeed().getAmplitude() > 2) {
                 ball.getSpeed().mul(0.5);
             }
-
-            //Log.d(TAG, "Ball " + ball.getID() + " inside right collision with basket.");
             return true;
         }
 
-        // Inside bottom  collision
+        // Inside bottom collision
         if (ball.getY() + ball.getRadius() >= basket.getY() + basket.getHeight()/2 - COLLISION_OFFSET &&
                 ball.getSpeed().getyDirection() == MySpeed.DIRECTION_DOWN)  {
 
@@ -318,7 +311,6 @@ public class Collision {
             }
 
             ball.setY(ball.getY() - 2);
-            //Log.d(TAG, "Ball " + ball.getID() + " inside bottom collision with basket.");
             return true;
         }
 

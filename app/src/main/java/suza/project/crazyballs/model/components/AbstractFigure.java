@@ -22,7 +22,7 @@ import suza.project.crazyballs.util.IGameInfoProvider;
  * Created by lmark on 03/08/2017.
  */
 
-public abstract class AbstractFigure implements IGameInfoProvider{
+public abstract class AbstractFigure implements IGameInfoProvider {
 
     /**
      * the actual bitmap

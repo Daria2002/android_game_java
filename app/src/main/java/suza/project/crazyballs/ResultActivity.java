@@ -37,11 +37,6 @@ public class ResultActivity extends AppCompatActivity {
     @BindView(R.id.table_main)
     TableLayout tableLayout;
 
-    /**
-     * Indicates thate activity is accessed from main screen.
-     */
-    private boolean fromMainScreen = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +54,6 @@ public class ResultActivity extends AppCompatActivity {
         // Check if intent was sent
         // If intent is found display alert dialog
         if (bundle != null){
-            fromMainScreen = false;
             Integer score = (Integer)intent.getExtras().get(GameActivity.SCORE_KEY);
             newScoreDialog(score);
         } else {
