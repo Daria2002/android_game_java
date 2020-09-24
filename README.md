@@ -1,3 +1,3 @@
-# soc-android-game
+# Android Game
+### [Link to Google Play](https://play.google.com/store/apps/details?id=suza.project.crazyballs)
 
-http://www.koonsolo.com/news/dewitters-gameloop/
