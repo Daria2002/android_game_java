@@ -1,16 +1,12 @@
 package suza.project.crazyballs.model.figures;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import suza.project.crazyballs.GameActivity;
 import suza.project.crazyballs.R;
-import suza.project.crazyballs.ResultActivity;
 import suza.project.crazyballs.game.GamePanel;
 import suza.project.crazyballs.model.components.AbstractFigure;
 import suza.project.crazyballs.model.containers.BasketBallContainer;

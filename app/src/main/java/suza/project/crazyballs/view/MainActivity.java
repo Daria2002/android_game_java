@@ -1,4 +1,4 @@
-package suza.project.crazyballs;
+package suza.project.crazyballs.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import suza.project.crazyballs.R;
 
 public class MainActivity extends AppCompatActivity {
 

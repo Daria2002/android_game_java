@@ -10,17 +10,17 @@
         android:icon="@drawable/smiley_face"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="suza.project.crazyballs.MainActivity">
+        <activity android:name="suza.project.crazyballs.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="suza.project.crazyballs.GameActivity" />
-        <activity android:name="suza.project.crazyballs.HowToPlayActivity" />
-        <activity android:name="suza.project.crazyballs.ResultActivity" />
-        <activity android:name="suza.project.crazyballs.ScoreActivity"></activity>
+        <activity android:name="suza.project.crazyballs.view.GameActivity" />
+        <activity android:name="suza.project.crazyballs.view.HowToPlayActivity" />
+        <activity android:name="suza.project.crazyballs.view.ResultActivity" />
+        <activity android:name="suza.project.crazyballs.view.ScoreActivity"></activity>
     </application>
 
 </manifest>

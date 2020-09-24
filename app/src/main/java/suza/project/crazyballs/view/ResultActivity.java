@@ -1,4 +1,4 @@
-package suza.project.crazyballs;
+package suza.project.crazyballs.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -24,6 +24,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import suza.project.crazyballs.R;
 import suza.project.crazyballs.util.DatabaseRequest;
 import suza.project.crazyballs.util.Score;
 

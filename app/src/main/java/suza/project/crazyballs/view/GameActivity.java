@@ -1,4 +1,4 @@
-package suza.project.crazyballs;
+package suza.project.crazyballs.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -6,16 +6,13 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 
+import suza.project.crazyballs.R;
 import suza.project.crazyballs.game.GamePanel;
 import suza.project.crazyballs.state.BasketGameState;
 import suza.project.crazyballs.state.LevelConfig;
